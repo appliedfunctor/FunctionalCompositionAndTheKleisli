@@ -94,7 +94,7 @@
 						<ul>
 							<li>What is a function?</li><br>
 							<li>What is composition?</li><br>
-							<li>Tools the standard library gives us:</li><br>
+							<li>The standard library:</li><br>
 							<ul>
 								<li>compose</li><br>
 								<li>andThen</li><br>
@@ -201,6 +201,176 @@
 					</section>		
 
 
+					
+
+
+				</section>
+
+
+				<section>
+
+					<section data-transition="convex-in concave-out">
+						<h2>The standard library</h2>	
+						<br>
+						<ul>
+							<li>compose</li><br>
+							<li>andThen</li><br>
+						</ul>
+					</section>	
+
+
+					<section data-transition="convex-in concave-out">
+						<h2>The `compose` function</h2>		
+						<br>				
+						<pre class="scala"><code data-trim>
+							trait Function1[-T1, +R] {
+
+								def compose[A](g: (A) => T1): (A) => R
+
+							}
+						</code></pre>		
+
+						<br>
+						<h5>In use</h5>
+						<pre class="scala"><code data-trim>
+							val doubleAndIncrement: Int => Int = inc.compose(double)
+
+							val doubleAndIncrement: Int => Int = inc compose double
+
+							val result = doubleAndIncrement(5) // 11
+						</code></pre>
+
+					</section>	
+
+
+					<section data-transition="convex-in concave-out">
+						<h2>Reading right to left</h2>		
+						<br>				
+						<pre class="scala"><code data-trim>
+							val doThing: Int => Int = inc compose
+
+											double compose
+
+												inc compose
+
+													triple
+						</code></pre>		
+					</section>	
+
+
+					<section data-transition="convex-in concave-out">
+						<h2>andThen</h2>		
+						<br>				
+						<pre class="scala"><code data-trim>
+							trait Function1[-T1, +R] {
+
+								def andThen[A](g: (R) => A): (T1) => A
+
+							}
+						</code></pre>		
+						<br>
+						<h5>In use</h5>
+						<pre class="scala"><code data-trim>
+							val incrementAndDouble: Int => Int = inc.andThen(double)
+
+							val incrementAndDouble: Int => Int = inc andThen double
+
+							val result = incrementAndDouble(5) // 12
+						</code></pre>		
+					</section>	
+
+
+					<section data-transition="convex-in concave-out">
+						<h2>Reading left to right</h2>		
+						<br>				
+						<pre class="scala"><code data-trim>
+							val doThing: Int => Int = inc andThen
+
+											double andThen
+
+												inc andThen
+
+													triple
+						</code></pre>		
+					</section>	
+
+
+					<section data-transition="convex-in concave-out">
+						<h2>The signature for chaining</h2>		
+						<br>				
+						<q>The output from the previous function must match the input to the next function in your chain</q> <br>- Alexander Worton, 2018</p>
+
+						<pre class="scala"><code data-trim>
+							val a: Config => DbResult
+							val b: DbResult => BigInt
+							val c: BigInt => BigInt
+							val d: BigInt => Json
+
+							val e: Config => Json = a andThen b andThen c andThen d
+						</code></pre>		
+					</section>	
+
+
+
+
+
+					<section data-transition="convex-in concave-out">
+						<h2>Can't compose, won't compose</h2>		
+						<br>				
+						<q>The output from the previous function must match the input to the next function in your chain</q> <br>- Alexander Worton, 2018</p>
+
+						<pre class="scala"><code data-trim data-noescape>
+							val a = () => 5
+
+							val b = Unit => 5
+
+							val c: Int => Int = _ * 2
+
+							<mark><s>val d = a andThen b</s></mark> //Function1[(), Int] // Function0[Int]
+
+							val d = a andThen c //Function1[Unit, Int]
+						</code></pre>		
+					</section>	
+
+
+				</section>
+
+
+
+				<section 
+					data-transition="convex-in concave-out" data-state="bg-white-right">
+					<div id="left">
+						<h2>Composing</h2>
+						<br>
+						<h3>with higher kinded types</h3>
+					</div>
+					<div id="right">
+						<ul>
+							<li>The standard library:</li><br>
+							<ul>
+								<li>map</li><br>
+								<li>flatMap</li><br>
+							</ul>
+							<li>The Kleisli</li><br>
+						</ul>
+					</div>
+				</section>
+
+
+
+
+				<section 
+					data-transition="convex-in concave-out" data-state="bg-white-right">
+					<div id="left">
+						<h2>Summary</h2>
+						
+					</div>
+					<div id="right">
+						<ul>
+							<li>Why use functional composition?</li><br>
+							<li>Testing</li><br>
+						</ul>
+					</div>
 				</section>
 
 

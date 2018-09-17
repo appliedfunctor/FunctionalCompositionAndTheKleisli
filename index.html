@@ -7,7 +7,7 @@
 		<title>reveal.js</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/theme/aworton.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -24,8 +24,187 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+
+
+
+				<section>
+            <h2>Functional Composition and the Kleisli</h2>
+            <h3>● ● ●</h3>
+            <h3><code><==<</code>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                A tale of two fishes 
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <code>>==></code></h3>
+            <br>
+            <br>
+            <h4>
+                Alexander Worton
+                <br>
+                Scala Exchange 2018
+            </h4>
+        </section>
+
+
+
+
+				<section>
+					<section data-transition="none">
+				    <h3>Outline</h3>
+						<object type="image/svg+xml" data="lib/svg/outline1.svg">
+						  Your browser does not support SVG
+						</object>
+				 </section>
+				 <section data-transition="none">
+				    <h3>Outline</h3>
+						<object type="image/svg+xml" data="lib/svg/outline2.svg">
+						  Your browser does not support SVG
+						</object>
+				 </section>
+				 <section data-transition="none">
+				    <h3>Outline</h3>
+						<object type="image/svg+xml" data="lib/svg/outline3.svg">
+						  Your browser does not support SVG
+						</object>
+				 </section>
+				 <section data-transition="none">
+				    <h3>Outline</h3>
+						<object type="image/svg+xml" data="lib/svg/outline4.svg">
+						  Your browser does not support SVG
+						</object>
+				 </section>
+				 <section data-transition="none">
+				    <h3>Outline</h3>
+						<object type="image/svg+xml" data="lib/svg/outline5.svg">
+						  Your browser does not support SVG
+						</object>
+				 </section>
+				</section>
+
+
+
+
+				<section 
+					data-transition="convex-in concave-out" data-state="bg-white-right">
+					<div id="left">
+						<h2>Functional composition</h2>
+						<br>
+						<h3> using the standard library</h3>
+					</div>
+					<div id="right">
+						<ul>
+							<li>What is a function?</li><br>
+							<li>What is composition?</li><br>
+							<li>Tools the standard library gives us:</li><br>
+							<ul>
+								<li>compose</li><br>
+								<li>andThen</li><br>
+							</ul>
+						</ul>
+					</div>
+				</section>
+
+
+
+				<section>
+
+
+					<section data-transition="convex-in concave-out">
+						<h2>What is a function? - def</h2>
+						<br>
+						<pre class="scala"><code data-trim>
+							Object Main extends App {
+
+								def backwards(input: String): String = {
+									input.reverse
+								}
+
+								backwards("fish")
+							}
+						</code></pre>
+					</section>
+
+
+					<section data-transition="convex-in concave-out">
+						<h2>What is a function? - value</h2>
+						<br>
+						<pre class="scala"><code data-trim>
+							Object Main extends App{
+
+								val backwards: String => String = input => {
+									input.reverse
+								}
+
+								backwards("fish")
+							}		
+						</code></pre>
+					</section>
+
+
+					<section data-transition="convex-in concave-out">
+						<h2>What is a function? - function1</h2>
+						<br>
+						<pre class="scala"><code data-trim>
+							Object Main extends App{
+
+								val backwards = new Function1[String, String] {
+									input.reverse
+								}
+
+								backwards("fish")
+							}
+						</code></pre>
+					</section>
+
+				</section>
+
+
+
+				<section>
+
+					<section data-transition="convex-in concave-out">
+						<h2>What is composition?</h2>		
+						<br>				
+						<pre class="scala"><code data-trim>
+							val double: Int => Int = _ * 2		// (number => number * 2)
+
+							val inc: Int => Int = _ + 1		// (number => number + 1)
+						</code></pre>
+
+						<br>
+						<h5>Chaining application</h5>
+						<pre class="scala"><code data-trim>
+							val doubled = double(5)
+
+							val incremented = inc(doubled)
+						</code></pre>
+
+						<br>
+						<h5>Nesting (inline)</h5>
+						<pre class="scala"><code data-trim>
+							val result = inc(double(5))
+						</code></pre>
+					</section>		
+
+
+					<section data-transition="convex-in concave-out">
+						<h2>Compose without applying</h2>		
+						<br>				
+						<pre class="scala"><code data-trim>
+							val doubleAndIncrement: Int => Int = number => {
+
+									inc(double(number))
+
+							}
+
+						</code></pre>
+
+					</section>		
+
+
+				</section>
+
+
+
 			</div>
 		</div>
 

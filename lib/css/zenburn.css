@@ -9,14 +9,14 @@ based on dark.css by Ivan Sagalaev
   display: block;
   overflow-x: auto;
   padding: 0.5em;
-  background: #3f3f3f;
+  background: #26292C;
   color: #dcdcdc;
 }
 
 .hljs-keyword,
 .hljs-selector-tag,
 .hljs-tag {
-  color: #e3ceab;
+  color: #4576A9;
 }
 
 .hljs-template-tag {
@@ -47,13 +47,13 @@ based on dark.css by Ivan Sagalaev
 .hljs-selector-class,
 .hljs-section,
 .hljs-type {
-  color: #efef8f;
+  color: #4EC9B0;
 }
 
 .hljs-symbol,
 .hljs-bullet,
 .hljs-link {
-  color: #dca3a3;
+  color: #4576A9;
 }
 
 .hljs-deletion,

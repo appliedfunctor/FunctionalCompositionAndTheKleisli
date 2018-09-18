@@ -109,48 +109,128 @@
 
 
 					<section data-transition="convex-in concave-out">
-						<h2>What is a function? - def</h2>
+						<h2>What is a function?</h2>
 						<br>
 						<pre class="scala"><code data-trim>
-							Object Main extends App {
+							object Main extends App {
 
 								def backwards(input: String): String = {
 									input.reverse
 								}
 
-								backwards("fish")
+								println(backwards("fish"))
+							}
+						</code></pre>
+					</section>
+
+
+
+					<section data-transition="convex-in concave-out">
+						<h2>A method</h2>
+						<br>
+						<pre class="scala"><code data-trim data-noescape>
+							object Main extends App {
+
+								def backwards(input: String): String = {
+									input.reverse
+								}
+
+								def getBackwards: String => String = {
+									input => input.reverse
+								}
+
+								println(backwards("fish"))
+								println(getBackwards("fish"))
+
+								<mark><s>val fn = backwards</s></mark>
+								val fn2 = getBackwards
+							}
+						</code></pre>
+					</section>
+
+
+
+					<section data-transition="convex-in concave-out">
+						<h2>Retrieving the function from a method</h2>
+						<br>
+						<pre class="scala"><code data-trim data-noescape>
+							object Main extends App {
+
+								def backwards(input: String): String = {
+									input.reverse
+								}
+
+								<mark><s>val back = backwards</s></mark>
+								val back2 = backwards _
+								val back3: String => String = backwards
+
+								println("back2: " + back2("reverse me"))
+								println("back3: " + back2("reverse me"))
 							}
 						</code></pre>
 					</section>
 
 
 					<section data-transition="convex-in concave-out">
-						<h2>What is a function? - value</h2>
+						<h2>A function value</h2>
 						<br>
 						<pre class="scala"><code data-trim>
-							Object Main extends App{
+							object Main extends App {
 
 								val backwards: String => String = input => {
 									input.reverse
 								}
 
-								backwards("fish")
+								println(backwards("fish"))
 							}		
 						</code></pre>
 					</section>
 
 
 					<section data-transition="convex-in concave-out">
-						<h2>What is a function? - function1</h2>
+						<h2>A lazy function value</h2>
 						<br>
 						<pre class="scala"><code data-trim>
-							Object Main extends App{
+							object Main extends App {
 
-								val backwards = new Function1[String, String] {
+								lazy val backwards: String => String = input => {
 									input.reverse
 								}
 
-								backwards("fish")
+								println(backwards("fish"))
+							}		
+						</code></pre>
+					</section>
+
+
+					<section data-transition="convex-in concave-out">
+						<h2>Function1[A, B]</h2>
+						<br>
+						<pre class="scala"><code data-trim>
+							Object Main extends App {
+
+								val backwards = new Function1[String, String] {
+									override def apply(input: String) = input.reverse
+								}
+
+								println(backwards("fish"))
+							}
+						</code></pre>
+					</section>
+
+
+					<section data-transition="convex-in concave-out">
+						<h2>What is a function? - function0</h2>
+						<br>
+						<pre class="scala"><code data-trim>
+							Object Main extends App {
+
+								// () => String
+								val backwards = new Function0[String] {
+							    override def apply() = "fish".reverse
+							  }
+
+							  println(backwards())
 							}
 						</code></pre>
 					</section>
@@ -169,6 +249,16 @@
 
 							val inc: Int => Int = _ + 1		// (number => number + 1)
 						</code></pre>
+					</section>		
+
+					<section data-transition="convex-in concave-out">
+						<h2>What is composition?</h2>		
+						<br>				
+						<pre class="scala"><code data-trim>
+							val double: Int => Int = _ * 2		// (number => number * 2)
+
+							val inc: Int => Int = _ + 1		// (number => number + 1)
+						</code></pre>
 
 						<br>
 						<h5>Chaining application</h5>
@@ -176,6 +266,16 @@
 							val doubled = double(5)
 
 							val incremented = inc(doubled)
+						</code></pre>
+					</section>		
+
+					<section data-transition="convex-in concave-out">
+						<h2>What is composition?</h2>		
+						<br>				
+						<pre class="scala"><code data-trim>
+							val double: Int => Int = _ * 2		// (number => number * 2)
+
+							val inc: Int => Int = _ + 1		// (number => number + 1)
 						</code></pre>
 
 						<br>

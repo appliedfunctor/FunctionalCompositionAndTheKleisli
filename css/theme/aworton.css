@@ -4,7 +4,8 @@
  */
 @import url(../../lib/font/oswald/oswald.css);
 @import url(../../lib/font/average/average.css);
-@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
+@import url(../../lib/font/roboto-mono/roboto-mono.css);
+
 /**
  * Solarized colors by Ethan Schoonover
  */
@@ -18,6 +19,7 @@ html * {
 body {
   background: #37474f;
   background-color: #37474f; }
+
 
 .reveal {
   font-family: "Average", serif;
@@ -184,12 +186,15 @@ html.bg-white-right body {
   font-family: monospace;
   line-height: 1.2em;
   word-wrap: break-word;
+  overflow: visible;
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3); }
 
 .reveal code {
   font-family: "RobotoMono", monospace;
   text-transform: none; 
   text-align: left;
+  overflow: visible;
+  word-wrap: break-word;
   /*display: block;
   margin-left: 40px;*/
 }

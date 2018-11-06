@@ -22,7 +22,7 @@ what is a method and what is the difference?
 
 Let's illustrate this with an example.
 
-Here we have backwards which is a method that returns a string. We know this because the return type is a String.
+Here we have backwards which is a method that returns a string. We know this because the return type is a String. Another great thing about statically typed languages.
 
 getBackwards is a method that takes no arguments and returns a function of String to String, that is the return type is a function with the same signature as backwards, it takes a string and returns a string.
 
@@ -32,9 +32,11 @@ Now, we can actually take the function from a method and store it in a val, but 
 
 As seen, just assigning it to a val won't work, because there's a little more work that needs to be done in order to be able to pass a function around as a variable.
 
-Applying using an underscore or explicitly stating the type of the val is enough to trigger this, but this shows us that there is a difference between a method and a function.                       
+Applying using an underscore or explicitly stating the type of the val is enough to trigger this, but the key take away here, is that it shows us that there is a difference between a method and a function.
+
+They are not the same thing.
 ----------------------------------------------------------------------------------------
-We can store a function as a val, and unlike the def, this is a function. 
+We can store a function as a val, and unlike the def, this is a function. In fact, every time you see that arrow operator, you know it's syntactic sugar for a function.
 
 Previously, we saw that a def could create a function, and be coerced to return a function but in this case we are directly assigning it.
 
@@ -44,7 +46,7 @@ A val is eagerly evaluated, that is the value is evaluated and assigned when the
 
 A def is evaluated every time it is called.
 ----------------------------------------------------------------------------------------
- A lazy val is like a regular val, but it isn't evaluated when it's declared, it's evaluated when first called or used.
+A lazy val is like a regular val, but it isn't evaluated when it's declared, it's evaluated when first called or used.
 
 So if we don't call it, it never gets evaluated
 
@@ -57,7 +59,7 @@ So now we know that
 
 Let's look at what a function is.
 ----------------------------------------------------------------------------------------
-A function as we pass it around in scala is object, so you can think of a function as being an instance of a particular trait that exists on the heap.
+A function as we pass it around in scala is object, so you can think of a function as being an instance of a particular trait that exists on the heap in memory.
 
 When we assign a function to a val, we store the memory location of the function object in the val.
 
@@ -112,7 +114,7 @@ This operates just like the dot compose notation in maths where a dot b produces
 
 or in this case whatever is passed in is doubled and then incremented.
 ----------------------------------------------------------------------------------------
-So we have improved the readability somewhat using the compose method by avoiding the nested calls, and we can use whitespace to make it a little easier still
+So we have improved the readability somewhat using the compose method by avoiding the nested calls, and we can use whitespace, just like you do in Python, to make it a little easier still.
 
 but we're still stuck with this problem where we have to read from right to left.
 
@@ -136,7 +138,7 @@ If your output from one function is a String, then the next function in the chai
 
 here we have a config to db result ......
 
-and because each signature in the chain matches up, we can produce a composed function of a andth b andthen c andthen d, however we couldn't do a compose b compose c compose d.
+and because each signature in the chain matches up, we can produce a composed function of a andThen b andthen c andthen d, however we couldn't do a compose b compose c compose d, because that's the same as d andThenc andThen b andThen a.
 ----------------------------------------------------------------------------------------
 before we wrap up this section, I'd like to highlight a few gotchas.
 
@@ -155,6 +157,124 @@ is not a function1[Unit, Int], but a function0[Int]
 
 and of all 23 functions, only function1 has the methods compose and andThen defined
 on it.
+
+Now, this brings us to the end of what we're going to look at with the standard library.
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+Let me present you with a common problem, and to do so let us introduce the 
+M word, by which of course I mean Monad. I am not going to cover Monads in this talk, by 
+which I mean that I am, but in a way that is not very useful in undestanding what a Monad 
+actually is.
+
+But if you are unfamiliar with them, for the purposes of our functional composition,
+think of them as a context or a box which wraps a value or type. 
+
+Kind of like how a variable is a box with a value in it, so that if you had: val x, x written on the front of the box, equals 5 - 5 stuffed into the box.
+
+A monad is a different kind of box that you set up that takes a type, which is a fancy way of saying it's a generic type - you have to provide the wrapped type to construct your new monad type. 
+
+The box provides context, A list is a Monad. If it's a List of Ints, then that is very different to an option of Int - also a Monad.
+
+but you can have monad with more than one type or with types that wrap other types, in fact it's turtles all the way down, until you hit elephants.
+
+That's a gross oversimplification of course, because I didn't tell you the colour or the type of the elephants. 
+
+
+Importantly, Monads have a few particular methods on them, one of which is flatMap. Map lets you pass in a function to be applied to the type inside the monad, and flatten allows you to squash nested types. So if your function produced a List[List[String]], flatten would squash this structure down to a List[String].
+
+FlatMap combines these effects.
+
+----------------------------------------------------------------------------------------
+
+Quite commonly, you'll have functions inside a context such as a Future, Task or IO, and this presents a problem. As we've already seen, in order to compose, our output from one function must form the input to the next.
+
+When we start calling functions that wrap that result inside a Future say, we have to a make a decision. we could simply write our functions to take a Future[Boolean] or IO[Boolean] as the input, but this might result in a set of small building blocks which are less composable or interchangable with other components. You may also feel that it pollutes the signatures.
+
+----------------------------------------------------------------------------------------
+
+Solution 1 - flatMap
+
+val comboFlatMap: Unit => Task[Boolean]  = _ => {
+    getEmployeeFromDb() flatMap { employee => 
+        processEmployee(employee) flatMap { processed =>
+            updateEmployeeInDb(processed)
+        }
+    }
+}
+
+This is very similar to the first way we approached composition, we are nesting our calls, we're delaying evaluation using the function we've created to wrap the composition, we just have the additional need to nest the flatMaps here as well.
+
+All in all it works, but it's not particularly easy to read.
+
+Let's go one better, using a feature of the standard library.
+----------------------------------------------------------------------------------------
+
+Solution 2 - For comprehension
+
+val comboFlatMap: Unit => Task[Boolean]  = _ => 
+    for {
+        employee <- getEmployeeFromDb()
+        processed <- processEmployee(employee)
+        result <- updateEmployeeInDb(processed)
+    } yield result
+
+
+
+So this is basically syntactic sugar for the hand cranked flatMap we've just seen and it's probably the most common form of handling this sort of monadic chain that you probably see. I think that's because it's much more readable, while doing the job.
+
+The opening line in the for comp sets the context of the comprehension, so in this case, the context is a Task, which the result when yielded will be wrapped in. So even though we have a handle on result as a boolean inside, the return value will be a Task[Boolean]
+
+However, we're still reliant on wrapping this eager composition inside a function call in order to delay it. 
+
+It would be nice if we could achieve what we did with the standard libraries compose and andThen, wouldn't it?
+
+And so we meet the Kleisli
+----------------------------------------------------------------------------------------
+
+Solution 3 - The Kleisli
+
+val fn: Int => Task[String] = ???
+val fnK: Kleisli[Task, Int, String] = ???
+
+The Kleisli allows us to compose functions while ignoring the context on the outputs. You can think of this as being like a Monad Transformer for functions.
+
+If we have a function with a signature of Int => Task[String], then when we lift that into the context of a Kleisli (again, another monad, turtles all the way down), we get a signature of Kleisli[Task, Int, String], that is the context is the first type parameter, the input the second and the extracted return type the third.
+----------------------------------------------------------------------------------------
+To lift a function into the context of a Kleisli, you call the apply method on the Kleisli. As we've seen, this can be explicitly or in the more usual syntax
+getEmployeeFromDb: Id => Task[Employee] = ???
+getEmployeeFromDbKleisli: Kleisli[Task, Id, Employee] = Kleisli.apply(getEmployeeFromDb)
+getEmployeeFromDbKleisli: Kleisli[Task, Id, Employee] = Kleisli(getEmployeeFromDb)
+----------------------------------------------------------------------------------------
+getEmployeeFromDbKleisli: Kleisli[Task, Id, Employee] = Kleisli(getEmployeeFromDb)
+processEmployeeKleisli: Kleisli[Task, Employee, Employee] = Kleisli(processEmployee)
+getEmployeeFromDbKleisli: Kleisli[Task, Employee, Int] = Kleisli(getEmployeeFromDb)
+
+comboKleisli: Kleisli[Task, Id, Int] = getEmployeeFromDbKleisli 
+                                            andThen processEmployeeKleisli 
+                                                andThen getEmployeeFromDbKleisli
+
+Now we are back to when we used the standard library for combining functions using methods defined on the Function1 trait, only now, we're doing so while the outputs are wrapped inside of whatever context we're using.
+
+There is still a little syntactic sugar to make this even more convenient.
+----------------------------------------------------------------------------------------
+comboKleisli: Kleisli[Task, Id, Int] = Kleisli(getEmployeeFromDb) 
+                                            andThenK processEmployeeKleisli 
+                                                andThenK getEmployeeFromDbKleisli
+
+So previously we'd lifted all of our functions into Kleisli in order to compose them, but the Kleisli itself provides the ability to perfrom both the lift and combination in a single step. You still need to lift the first function, but after that you can either use andThenK or composeK if you're using Scalaz, or Cats simply overloads the andThen operator so there's no change between providing a function or kleisli wrapped function in the chain.   
+
+The only thing remaining to do is extract our combined function out of the kleisli that's wrapping it.
+----------------------------------------------------------------------------------------
+comboFn: Id => Task[Int] = (Kleisli(getEmployeeFromDb) 
+                                    andThenK processEmployeeKleisli 
+                                        andThenK getEmployeeFromDbKleisli).run
+
+we do that by calling the run function on the kleisli.run
+
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------

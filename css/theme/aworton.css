@@ -17,8 +17,8 @@ html * {
  * GLOBAL STYLES
  *********************************************/
 body {
-  background: #37474f;
-  background-color: #37474f; }
+  background: #202020;
+  background-color: #202020; }
 
 
 .reveal {
@@ -99,6 +99,12 @@ body {
 /*********************************************
  * OTHER
  *********************************************/
+
+.headerBox {
+  background-color:rgba(0, 0, 0, 0.75);
+  padding: 2em;
+}
+
 .reveal p {
   margin: 20px 0;
   line-height: 1.3; }

@@ -27,10 +27,11 @@
 
 
 
-				<section>
+				<section data-background="lib/images/david-clode-533375-unsplash.jpg">
+					<div class="headerBox">
             <h2>Functional Composition and the Kleisli</h2>
             <h3>● ● ●</h3>
-            <h3><code><==<</code>
+            <h3><code><=<</code>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 A tale of two fish(es) 
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -40,36 +41,36 @@
             <h4>
                 Alexander Worton
                 <br>
-                Scala Exchange 2018
+                Scala eXchange 2018
             </h4>
+          </div>
         </section>
 
-                <section data-transition="convex-in concave-out" data-background="lib/images/blur-clock-clock-face-280361.jpg">
+          <section data-transition="convex-in concave-out" data-background="lib/images/blur-clock-clock-face-280361.jpg">
 
-                    <aside class="notes">
+              <aside class="notes">
+                  Complexity is the arch nemesis of better, more correct and more robust software.
 
-                        Complexity is the arch nemesis of better, more correct and more robust software.
+                  We are going to look at how we can use functional composition to reduce complexity
+                  and give ourselves another approach to writing software to be applied when it makes
+                  sense to do so.
 
-                        We are going to look at how we can use functional composition to reduce complexity
-                        and give ourselves another approach to writing software to be applied when it makes
-                        sense to do so.
+                  When it makes sense could range from never to every time, and that will depend on your
+                  team, your style, your domain.
 
-                        When it makes sense could range from never to every time, and that will depend on your
-                        team, your style, your domain.
+                  I love functional programming, it excites me, and I'm very lucky to be working on a team
+                  which aligns in style and approach.
 
-                        I love functional programming, it excites me, and I'm very lucky to be working on a team
-                        which aligns in style and approach.
-
-                        But everyone is different and the beauty and bain of scala is that it allows for a mix of
-                        approaches and styles from OOP and FP that can be combined in a vast number of ways.
-                    </aside>
-                </section>
-
+                  But everyone is different and the beauty and bain of scala is that it allows for a mix of
+                  approaches and styles from OOP and FP that can be combined in a vast number of ways.
+              </aside>
+          </section>
 
 
 
-				<section>
-					<section data-transition="none">
+
+				<section data-background="lib/images/background.jpg">
+					<!-- <section data-transition="none">
 				    <h3>Outline</h3>
 						<object type="image/svg+xml" data="lib/svg/outline1.svg">
 						  Your browser does not support SVG
@@ -92,7 +93,7 @@
 						<object type="image/svg+xml" data="lib/svg/outline4.svg">
 						  Your browser does not support SVG
 						</object>
-				 </section>
+				 </section> -->
 				 <section data-transition="none">
 				    <h3>Outline</h3>
 						<object type="image/svg+xml" data="lib/svg/outline5.svg">
@@ -107,12 +108,12 @@
 
 
 				<section 
-					data-transition="convex-in concave-out">
+					data-transition="convex-in concave-out" data-background="lib/images/books-bookshelf-encyclopedia-34592.jpg">
 
-					<div>
-						<h2>Functional composition</h2>
+					<div class="headerBox">
+						<h2 class="stroke">Functional composition</h2>
 						<br>
-						<h3>using the standard library</h3>
+						<h3 class="stroke">using the standard library</h3>
 					</div>
 
 					<aside class="notes">
@@ -137,7 +138,7 @@
 
 
 
-				<section>
+				<section data-background="lib/images/background.jpg">
 
 
 					<section data-transition="convex-in concave-out">
@@ -381,7 +382,7 @@
 
 
 
-				<section>
+				<section data-background="lib/images/background.jpg">
 
 					<section data-transition="convex-in concave-out">
 						<h2>What is composition?</h2>		
@@ -494,10 +495,12 @@
 				</section>
 
 
-				<section>
+				<section data-background="lib/images/background.jpg">
 
-					<section data-transition="convex-in concave-out">
-						<h2>What else does the standard library provide?</h2>	
+					<section data-transition="convex-in concave-out" data-background="lib/images/giammarco-boscaro-380903-unsplash.jpg">
+						<div class="headerBox">
+							<h2>What else does the standard library provide?</h2>	
+						</div>
 					</section>	
 
 
@@ -663,9 +666,9 @@
 							val result = unitNum andThen double //Function1[Unit, Int]
 
 							<span class="fragment" data-fragment-index="1">// no Function1[(), Int] Function0[Int]</span>
-							<span class="fragment"  data-fragment-index="1">val laterNum = () => 5</span>
+							val laterNum = () => 5
 							<br>
-							<span class="fragment" data-fragment-index="2"><mark><s>val other = laterNum andThen double</s></mark></span>
+							<span class="fragment" data-fragment-index="1"><mark><s>val other = laterNum andThen double</s></mark></span>
 
 							
 						</code></pre>
@@ -695,62 +698,337 @@
 
 				</section>
 
+				<section data-background="lib/images/background.jpg">
+
+						<section 
+							data-transition="convex-in concave-out">
+							<div>
+								<h2>Composing</h2>
+								<br>
+								<h3>with higher kinded types</h3>
+							</div>
+							<aside class="notes">
+								<ul>
+									<li>The standard library:</li><br>
+									<ul>
+										<li>map</li><br>
+										<li>flatMap</li><br>
+									</ul>
+									<li>The Kleisli</li><br>
+								</ul>
+							</aside>
+						</section>
+
+						<section data-background="lib/images/george-bonev-296136-unsplash.jpg">
+						</section>
 
 
-				<section 
-					data-transition="convex-in concave-out">
-					<div>
-						<h2>Composing</h2>
+						<section data-background="lib/images/tanguy-sauvin-3121-unsplash.jpg">
+						</section>
+
+
+						<section data-transition="convex-in concave-out">
+						<h2>The problem composing with a context</h2>		
+						<br>				
+						<pre class="scala"><code data-trim>
+							val getEmployeeFromDb: Id => IO[Employee]
+
+							val processEmployee: Employee => IO[Employee]
+
+							val updateEmployeeInDb: Employee => IO[Int]
+						</code></pre>
+
+                        <aside class="notes">
+                            Quite commonly, you'll have functions inside a context such as a Future, Task or IO, and this presents a problem. As we've already seen, in order to compose, our output from one function must form the input to the next.
+                        </aside>
+						</section>	
+
+						<section data-transition="convex-in concave-out">
+						<h2>Solution 1 - flatMap</h2>		
+						<br>				
+						<pre class="scala"><code data-trim>
+							val comboFlatMap: Id => IO[Boolean] = id => 
+						    getEmployeeFromDb(id) flatMap { employee => 
+						        processEmployee(employee) flatMap { processed =>
+						            updateEmployeeInDb(processed)
+						        }
+						    }
+							
+						</code></pre>
+
+                        <aside class="notes">
+  
+                        </aside>
+						</section>	
+
+						<section data-transition="convex-in concave-out">
+						<h2>Solution 2 - For comprehension</h2>		
+						<br>				
+						<pre class="scala"><code data-trim>
+							val comboForComp: Unit => IO[Boolean] = id =>
+							    for {
+							        employee <- getEmployeeFromDb(id)
+							        processed <- processEmployee(employee)
+							        result <- updateEmployeeInDb(processed)
+							    } yield result
+						</code></pre>
+
+                        <aside class="notes">
+                           
+                        </aside>
+						</section>	
+
+						<section data-transition="convex-in concave-out">
+						<h2>Solution 3 - The Kleisli</h2>		
+						<br>				
+						<pre class="scala"><code data-trim>
+							val fn: Int => IO[String] = ???
+							val fnK: Kleisli[IO, Int, String] = ???
+						</code></pre>
+
+                        <aside class="notes">
+                            
+                        </aside>
+						</section>	
+
+
+						<section data-transition="convex-in concave-out">
+						<h2>Lifting into a Kleisli</h2>		
+						<br>				
+						<pre class="scala"><code data-trim>
+							val getEmployeeFromDb: Id => IO[Employee] = ???
+
+							val getEmployeeFromDbK = Kleisli.apply(getEmployeeFromDb)
+
+							val getEmployeeFromDbK = Kleisli(getEmployeeFromDb)
+						</code></pre>
+
+                        <aside class="notes">
+                            
+                        </aside>
+						</section>	
+
+
+						<section data-transition="convex-in concave-out">
+						<h2>Combining Kleisli</h2>		
+						<br>				
+						<pre class="scala"><code data-trim>
+							val getEmployeeFromDbK: Kleisli[IO, Id, Employee] = ???
+							val processEmployeeK: Kleisli[IO, Employee, Employee] = ???
+							val updateEmployeeInDbK: Klesili[IO, Employee, Int] = ???
+
+							val comboKleisli: Kleisli[IO, Id, Int] = 
+								getEmployeeFromDbK
+									andThen processEmployeeK
+										andThen updateEmployeeInDbK
+						</code></pre>
+
+                        <aside class="notes">
+                            
+                        </aside>
+						</section>	
+
+						<section data-transition="convex-in concave-out">
+						<h2>Combining and lifting Kleisli</h2>		
+						<br>				
+						<pre class="scala"><code data-trim>
+							val comboKleisli: Kleisli[IO, Id, Int] = 
+								Kleisli(getEmployeeFromDb)
+									andThenK processEmployee
+										andThenK updateEmployeeInDb
+						</code></pre>
+
+                        <aside class="notes">
+                            
+                        </aside>
+						</section>
+
+						<section data-transition="convex-in concave-out" data-background="lib/images/chase-clark-509084-unsplash.jpg">
+							<div class="headerBox">
+								<h2>I put on my robe<br>and wizard hat...</h2>		
+							</div>
+						</section>
+
+						<section data-transition="convex-in concave-out">
+							<pre class="scala"><code data-trim>
+							val comboKleisli: Kleisli[Task, Id, Int] = 
+								Kleisli(getEmployeeFromDb)
+									>=> Kleisli(processEmployee)
+										>=> Kleisli(updateEmployeeInDb)
+						</code></pre>
 						<br>
-						<h3>with higher kinded types</h3>
-					</div>
-					<aside class="notes">
-						<ul>
-							<li>The standard library:</li><br>
-							<ul>
-								<li>map</li><br>
-								<li>flatMap</li><br>
-							</ul>
-							<li>The Kleisli</li><br>
-						</ul>
-					</aside>
+						<pre class="scala"><code data-trim>
+							val comboKleisli: Kleisli[Task, Id, Int] = 
+								Kleisli(getEmployeeFromDb)
+									>==> processEmployee
+										>==> updateEmployeeInDb
+						</code></pre>
+
+            <aside class="notes">
+                
+            </aside>
+						</section>
+
+
+						<section data-transition="convex-in concave-out">
+						<h2>Extracting from a Kleisli</h2>		
+						<br>				
+						<pre class="scala"><code data-trim>
+							comboFn: Id => IO[Int] = 
+								(Kleisli(getEmployeeFromDb)
+									andThenK processEmployeeK
+										andThenK updateEmployeeInDbK).run
+						</code></pre>
+
+                        <aside class="notes">
+                            
+                        </aside>
+						</section>	
+
+				</section>
+
+				<section data-background="lib/images/background.jpg">
+						<section data-transition="convex-in concave-out">
+							<h2>What are the benefits?</h2>
+							<aside class="notes">
+								
+							</aside>
+						</section>
+
+						<section data-transition="convex-in concave-out">
+							<div>
+								<h2>Readability</h2>
+								<pre class="scala"><code data-trim>
+									
+								</code></pre>
+								
+							</div>
+							<aside class="notes">
+								
+							</aside>
+						</section>
+
+
+						<section data-transition="convex-in concave-out">
+							<div>
+								<h2>Reusability</h2>
+								<pre class="scala"><code data-trim>
+									
+								</code></pre>
+								
+							</div>
+							<aside class="notes">
+								
+							</aside>
+						</section>
+
+						<section data-transition="convex-in concave-out">
+							<div>
+								<h2>Robustness (Testing)</h2>
+								<pre class="scala"><code data-trim>
+									val amsGetFilesForProdId: ProductionId => IO[List[File]] =
+										_ => IO.pure(amsFiles)
+								</code></pre>
+								
+							</div>
+							<aside class="notes">
+								
+							</aside>
+						</section>
+
+						<section data-transition="convex-in concave-out">
+							<div>
+								<h2>Downside</h2>
+								
+								Time investment to understand 
+								
+							</div>
+							<aside class="notes">
+								
+							</aside>
+						</section>
+
+
+				</section>
+
+				<section data-background="lib/images/background.jpg">
+						<section 
+							data-transition="convex-in concave-out">
+							<div>
+								<h2>Injecting Configuration</h2>
+								
+							</div>
+							<aside class="notes">
+								<ul>
+									<li>Why use functional composition?</li><br>
+									<li>Testing</li><br>
+								</ul>
+							</aside>
+						</section>
 				</section>
 
 
 
 
-				<section 
-					data-transition="convex-in concave-out">
-					<div>
-						<h2>Injecting Configuration</h2>
-						
-					</div>
-					<aside class="notes">
-						<ul>
-							<li>Why use functional composition?</li><br>
-							<li>Testing</li><br>
-						</ul>
-					</aside>
+				<!-- SUMMARY -->
+
+				<section data-background="lib/images/background.jpg">
+
+						<section 
+							data-transition="convex-in concave-out">
+							<div>
+								<h2>Summary</h2>
+								
+							</div>
+							<aside class="notes">
+								<ul>
+									<li>Why use functional composition?</li><br>
+									<li>Testing</li><br>
+								</ul>
+							</aside>
+						</section>
+
+						<section>
+							<h2>Thanks</h2>
+							<h4>Pixabay</h4>
+							<strong>Clock face</strong> photo by Thomas Breher<br>
+							<strong>Books</strong> photo by Unknown<br>
+							<br>
+							<h4>Unsplash</h4>
+
+							<strong>Fish</strong> Photo by David Clode
+							<strong>Blue Lego</strong> Photo by Iker Urteaga
+							<strong>Cat in a box</strong> photo by George Bonev<br>
+							<strong>Turtle</strong> Photo by Tanguy Sauvin<br>
+							<strong>Bookshelf with ladder</strong> Photo by Giammarco Boscaro
+							<strong>Wizard</strong> Photo by David Clode
+
+							
+
+						</section>
+
+						<section>
+							<h3>Slides?</h3>
+							https://github.com/aworton
+							<br><br>
+							<h3>Follow?</h3>
+							twitter: @ajsworton
+							<br>linkedIn: Alexander Worton
+
+						</section>
+
+						<section>
+							<br>
+							<br>
+							This presentation will be soon available on the Scala eXchange London website at the following link: 
+							<br><br>https://skillsmatter.com/conferences/10488-scala-exchange-2018#skillscasts
+
+							<br><br>The tutorial video is available at:
+							<br><br>https://www.youtube.com/watch?v=qL6Viix3npA
+
+						</section>
+
 				</section>
-
-
-
-
-
-				<section 
-					data-transition="convex-in concave-out">
-					<div>
-						<h2>Summary</h2>
-						
-					</div>
-					<aside class="notes">
-						<ul>
-							<li>Why use functional composition?</li><br>
-							<li>Testing</li><br>
-						</ul>
-					</aside>
-				</section>
-
 
 
 			</div>

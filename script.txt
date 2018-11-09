@@ -162,11 +162,9 @@ Now, this brings us to the end of what we're going to look at with the standard 
 ----------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------
 Let me present you with a common problem, and to do so let us introduce the 
-M word, by which of course I mean Monad. I am not going to cover Monads in this talk, by 
-which I mean that I am, but in a way that is not very useful in undestanding what a Monad 
-actually is.
+M word, by which of course I mean Monad.
 
-But if you are unfamiliar with them, for the purposes of our functional composition,
+If you are unfamiliar with them, for the purposes of our functional composition, you
 think of them as a context or a box which wraps a value or type. 
 
 Kind of like how a variable is a box with a value in it, so that if you had: val x, x written on the front of the box, equals 5 - 5 stuffed into the box.

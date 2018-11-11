@@ -12,6 +12,12 @@
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
 
+		<!-- Font awesome brands -->
+		<link href="lib/css/fontawesome.min.css" rel="stylesheet">
+		<link href="lib/css/brands.min.css" rel="stylesheet">
+
+		<style> .reveal i.fa { font-family:FontAwesome; font-style: normal; } </style>
+
 		<!-- Printing and PDF exports -->
 		<script>
 			var link = document.createElement( 'link' );
@@ -96,7 +102,7 @@
 				 </section> -->
 				 <section data-transition="none">
 				    <h3>Outline</h3>
-						<object type="image/svg+xml" data="lib/svg/outline5.svg">
+						<object type="image/svg+xml" data="lib/svg/outline.svg">
 						  Your browser does not support SVG
 						</object>
 				 </section>
@@ -107,7 +113,13 @@
 
 
 
-				<section 
+				
+
+
+
+				<section data-background="lib/images/background.jpg">
+
+					<section 
 					data-transition="convex-in concave-out" data-background="lib/images/books-bookshelf-encyclopedia-34592.jpg">
 
 					<div class="headerBox">
@@ -135,10 +147,6 @@
 						</ul>
 					</aside>
 				</section>
-
-
-
-				<section data-background="lib/images/background.jpg">
 
 
 					<section data-transition="convex-in concave-out">
@@ -195,8 +203,6 @@
 
 								println(backwards("fish"))
 								println(getBackwards("fish"))
-								<mark><s>val fn = backwards</s></mark>
-								val fn2 = getBackwards
 							}
 						</code></pre>
                         <aside class="notes">
@@ -227,6 +233,37 @@
 
 
 
+
+					<section data-transition="convex-in concave-out">
+						<h2>Function vs Method</h2>
+						<br>
+						<pre class="scala"><code data-trim data-noescape>
+							object Main extends App {
+
+								def backwards(input: String): String = {
+									input.reverse
+								}
+
+								def getBackwards: String => String = {
+									input => input.reverse
+								}
+								
+								<mark><s>val fn = backwards</s></mark>
+								val fn2 = getBackwards
+							}
+						</code></pre>
+                        <aside class="notes">
+
+                            <ul>
+                                <li>So what's a method, what's a function?</li><br>
+                                <li></li><br>
+                                <li></li><br>
+                            </ul>
+                        </aside>
+					</section>
+
+
+
 					<section data-transition="convex-in concave-out">
 						<h2>Retrieving the function from a method</h2>
 						<br>
@@ -242,7 +279,7 @@
 								val back3: String => String = backwards
 
 								println("back2: " + back2("reverse me"))
-								println("back3: " + back2("reverse me"))
+								println("back3: " + back3("reverse me"))
 							}
 						</code></pre>
                         <aside class="notes">
@@ -261,10 +298,10 @@
 					<section data-transition="convex-in concave-out">
 						<h2>A function value</h2>
 						<br>
-						<pre class="scala"><code data-trim>
+						<pre class="scala"><code data-trim data-noescape>
 							object Main extends App {
 
-								val backwards: String => String = input => {
+								<mark>val</mark> backwards: String => String = input => {
 									input.reverse
 								}
 
@@ -290,10 +327,10 @@
 					<section data-transition="convex-in concave-out">
 						<h2>A lazy function value</h2>
 						<br>
-						<pre class="scala"><code data-trim>
+						<pre class="scala"><code data-trim data-noescape>
 							object Main extends App {
 
-								lazy val backwards: String => String = input => {
+								<mark>lazy val</mark> backwards: String => String = input => {
 									input.reverse
 								}
 
@@ -322,7 +359,7 @@
 					<section data-transition="convex-in concave-out">
 						<h2>Function1[A, B]</h2>
 						<br>
-						<pre class="scala"><code data-trim>
+						<pre class="scala"><code data-trim data-noescape>
 							Object Main extends App {
 
 								val backwards = new Function1[String, String] {
@@ -378,11 +415,6 @@
                         </aside>
 					</section>
 
-				</section>
-
-
-
-				<section data-background="lib/images/background.jpg">
 
 					<section data-transition="convex-in concave-out">
 						<h2>What is composition?</h2>		
@@ -701,8 +733,9 @@
 				<section data-background="lib/images/background.jpg">
 
 						<section 
-							data-transition="convex-in concave-out">
-							<div>
+							data-transition="convex-in concave-out"
+							data-background="lib/images/alvaro-reyes-500044-unsplash.jpg">
+							<div class="headerBox">
 								<h2>Composing</h2>
 								<br>
 								<h3>with higher kinded types</h3>
@@ -888,8 +921,13 @@
 				</section>
 
 				<section data-background="lib/images/background.jpg">
-						<section data-transition="convex-in concave-out">
-							<h2>What are the benefits?</h2>
+						<section data-transition="convex-in concave-out"
+						data-background="lib/images/gabriel-lamza-785336-unsplash.jpg">
+						<div class="headerBox">
+							<h2>Benefits</h2>
+							<br>
+							<h3>and how can I get them?</h3>
+						</div>
 							<aside class="notes">
 								
 							</aside>
@@ -951,34 +989,16 @@
 
 				</section>
 
-				<section data-background="lib/images/background.jpg">
-						<section 
-							data-transition="convex-in concave-out">
-							<div>
-								<h2>Injecting Configuration</h2>
-								
-							</div>
-							<aside class="notes">
-								<ul>
-									<li>Why use functional composition?</li><br>
-									<li>Testing</li><br>
-								</ul>
-							</aside>
-						</section>
-				</section>
-
-
-
 
 				<!-- SUMMARY -->
 
 				<section data-background="lib/images/background.jpg">
 
 						<section 
+							data-background="lib/images/blake-cheek-975905-unsplash.jpg"
 							data-transition="convex-in concave-out">
-							<div>
-								<h2>Summary</h2>
-								
+							<div class="headerBox">
+								<h2>We all float down here</h2>								
 							</div>
 							<aside class="notes">
 								<ul>
@@ -989,42 +1009,42 @@
 						</section>
 
 						<section>
-							<h2>Thanks</h2>
-							<h4>Pixabay</h4>
+							<h2>Thanks Pixabay</h2>
 							<strong>Clock face</strong> photo by Thomas Breher<br>
 							<strong>Books</strong> photo by Unknown<br>
-							<br>
-							<h4>Unsplash</h4>
+						</section>
 
-							<strong>Fish</strong> Photo by David Clode
-							<strong>Blue Lego</strong> Photo by Iker Urteaga
+						<section>
+							<h2>Thanks Unsplash</h2>
+							<strong>Fish</strong> Photo by David Clode<br>
+							<strong>Blue Lego</strong> Photo by Iker Urteaga<br>
 							<strong>Cat in a box</strong> photo by George Bonev<br>
 							<strong>Turtle</strong> Photo by Tanguy Sauvin<br>
-							<strong>Bookshelf with ladder</strong> Photo by Giammarco Boscaro
-							<strong>Wizard</strong> Photo by David Clode
+							<strong>Bookshelf with ladder</strong> Photo by Giammarco Boscaro<br>
+							<strong>Wizard</strong> Photo by David Clode<br>
+							<strong>Pair programming</strong> Photo by Alvaro Reyes<br>
+							<strong>Cloud</strong> Photo by Gabriel Lamza<br>
+							<strong>Baloon</strong> Photo by Blake Cheek<br>
+						</section>
 
-							
+						<section>
+							<br>
+							<br>
+							<strong>This presentation will be soon available on the Scala eXchange London website at the following link:</strong>
+							<br><br>https://skillsmatter.com/conferences/10488-scala-exchange-2018#skillscasts
+<br><br>
+							<br><br><strong>A tutorial video is available on <i class="fab fa-youtube"></i> YouTube</strong>
+							<br><br>https://www.youtube.com/watch?v=qL6Viix3npA
 
 						</section>
 
 						<section>
 							<h3>Slides?</h3>
-							https://github.com/aworton
+							<i class="fab fa-github"></i> https://github.com/aworton
 							<br><br>
 							<h3>Follow?</h3>
-							twitter: @ajsworton
-							<br>linkedIn: Alexander Worton
-
-						</section>
-
-						<section>
-							<br>
-							<br>
-							This presentation will be soon available on the Scala eXchange London website at the following link: 
-							<br><br>https://skillsmatter.com/conferences/10488-scala-exchange-2018#skillscasts
-
-							<br><br>The tutorial video is available at:
-							<br><br>https://www.youtube.com/watch?v=qL6Viix3npA
+							<i class="fab fa-twitter"></i> @ajsworton
+							<br><i class="fab fa-linkedin"></i> alexander-worton
 
 						</section>
 

@@ -1,15 +1,29 @@
-Complexity is the arch nemesis of better, more correct and more robust software.
+Building software is hard, and it's hard because it's complex.
 
-We are going to look at how we can use functional composition to reduce complexity and give ourselves another approach to writing software to be applied when it makes sense to do so.
+If you're like me, then Scala wasn't your first language, so you came with some baggage. Now in many cases, that baggage is a good thing because it makes it easier and faster to pick things up. We stand upon the shoulders of giants, even when those giants are earlier versions of ourselves.
 
-When it makes sense could range from never to every time, and that will depend on your team, your style, your domain.
+But at the same time, it can also hinder you because you tend to fall back on that knowledge in order to be productive.
 
-I love functional programming, it excites me, and I'm very lucky to be working on a team which aligns in style and approach.
+Object Oriented Programming and Functional Programming are very different paradigms and the beauty and bane of Scala is that it let's you play with both.
 
-But everyone is different and the beauty and bain of scala is that it allows for a mix of approaches and styles from OOP and FP that can be combined in a vast number of ways.
+To illustrate the difference in approach, lets look at a mechanical watch. OOP's answer to complexity is to encapsulate the complexity inside objects. All of the gears are hidden away so you don't have to worry about them when you use the watch. You use the API instead. The Object is King.
+
+Functional Programming mainly tries to reduce complexity. Immutability, referential transparency are all means to simplification, but it too like OOP encapsulates, it just does so through the function. The function is King.
+
+Both approaches then compose larger more complex software from their respective building blocks, the object and the function. 
+
+About a year ago, my team evaluated a number of different http frameworks to replace our aging Scalatra stack. The winner of that competition was HTTP4s. Quite a clean, minimal, functional framework.
+
+The predominent style we were using in the older stack was one with functional in the small, oop in the large.
+
+That is, we were writing functional code, what I like to call filter, map, magic, but the microservices were being hung together in an oo way, using an object based approach and making use of inheritance and classic object based dependency injection for testing.
+
+More recently, we've been looking at a more functional way of hanging these things together.
 
 ----------------------------------------------------------------------------------------
-To start we'll look at what a function is and how we can compose using the standard library  then we'll look at composing with higher kinded types before considering configuration injection.
+To start we'll go right to the beginning and look at what a function is and what functional composition is, then we'll look at composing functions using the standard library in more depth before pressing on to composing with higher kinded types.
+
+Basics, Standard Lib, Higher Kinded Types.
 ----------------------------------------------------------------------------------------
 I'd like to take you back in time, to when you first encountered Scala. If your experience was anything like mine, then you probably encountered a def like this. Even if the syntax is a little different, it's fairly easy to recognise the argument, return type and implementation, I'd say that it's quite familiar whether you've come from Java, Javascript, C# or Python, In fact it's very similar to python, uses a def keyword and everything.
 
@@ -22,7 +36,7 @@ what is a method and what is the difference?
 
 Let's illustrate this with an example.
 
-Here we have backwards which is a method that returns a string. We know this because the return type is a String. Another great thing about statically typed languages.
+Here we have backwards which is a method that returns a string. We know this because the return type is a String. Hail the static typing.
 
 getBackwards is a method that takes no arguments and returns a function of String to String, that is the return type is a function with the same signature as backwards, it takes a string and returns a string.
 
@@ -140,7 +154,7 @@ here we have a config to db result ......
 
 and because each signature in the chain matches up, we can produce a composed function of a andThen b andthen c andthen d, however we couldn't do a compose b compose c compose d, because that's the same as d andThenc andThen b andThen a.
 ----------------------------------------------------------------------------------------
-before we wrap up this section, I'd like to highlight a few gotchas.
+before we wrap up this section, I'd like to highlight a gotcha .
 
 result here is perfectly fine.
 
@@ -161,26 +175,39 @@ on it.
 Now, this brings us to the end of what we're going to look at with the standard library.
 ----------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------
-Let me present you with a common problem, and to do so let us introduce the 
-M word, by which of course I mean Monad.
+Part 3 - Higher Kinded Types
 
-If you are unfamiliar with them, for the purposes of our functional composition, you
-think of them as a context or a box which wraps a value or type. 
+Now of course, when you see a picture like this you know we're going to talk about Monads.
 
-Kind of like how a variable is a box with a value in it, so that if you had: val x, x written on the front of the box, equals 5 - 5 stuffed into the box.
+Don't worry, we opened the lid, the cat's fine.
 
-A monad is a different kind of box that you set up that takes a type, which is a fancy way of saying it's a generic type - you have to provide the wrapped type to construct your new monad type. 
+If you are unfamiliar with Monads, for the purposes of our functional composition, you can
+think of them as a context or a box which wraps a val ue or type. 
 
-The box provides context, A list is a Monad. If it's a List of Ints, then that is very different to an option of Int - also a Monad.
+Kind of like how a variable is a box with a value in it, so that if you had: val x, you now have a box with x written on the front, equals 5 - the value 5 placed into the box.
 
-but you can have monad with more than one type or with types that wrap other types, in fact it's turtles all the way down, until you hit elephants.
+A monad is a different kind of box that you set up that takes a type, which is a fancy way of saying it's a generic - you have to provide the wrapped type (the cat) in this example, to construct your new monad. 
 
-That's a gross oversimplification of course, because I didn't tell you the colour or the type of the elephants. 
+The box itself provides context, A list is a Monad. If it's a List of cats, then that has a very different meaning to to an option of cat. The list means that there is a sequence of cats, the option is all about whether the cat exists or not. a softer version of Schrodingers cat.
 
+but you can have monad with more than one type, perhaps the box has a cat and a dog in it or with types that wrap other types, a cat in a box in a box: just like hp or amazon used to do, where you'd receive a delivery to then open a sequence of boxes before reaching the item.
 
-Importantly, Monads have a few particular methods on them, one of which is flatMap. Map lets you pass in a function to be applied to the type inside the monad, and flatten allows you to squash nested types. So if your function produced a List[List[String]], flatten would squash this structure down to a List[String].
+In this case, you can think of the boxed cat as a turtle.
 
-FlatMap combines these effects.
+----------------------------------------------------------------------------------------
+In fact it's turtles all the way down, until you hit elephants.
+
+The important take-away for functional composition are a couple of methods on your context or box: map and flatMap. 
+
+If you want to pet the cat you need a way to play with the thing inside the box. A Functor has a map method which allows you to provide a function to be applied to the contents of the box.
+
+A monad has this, but also has a flatten method which allows you to unbox cats, or turn turtles back into cats.
+
+A good example of this is if you had a List[String] and passed a function in via map which took each string and split it into a List[Char]. You now have a List[List[Char]], we're back to turtles.
+
+Flatten takes a box of a box of thing, and returns a box of thing. It flattens the structure.
+
+The flatMap method therefore combines map and flatten, such that you take what's in the box, apply a transformation that results in a box of a box of thing, which is then flattened to return a box of a thing back.
 
 ----------------------------------------------------------------------------------------
 
@@ -200,7 +227,9 @@ val comboFlatMap: Unit => Task[Boolean]  = _ => {
     }
 }
 
-This is very similar to the first way we approached composition, we are nesting our calls, we're delaying evaluation using the function we've created to wrap the composition, we just have the additional need to nest the flatMaps here as well.
+So here, we're using flatMap to reach inside the IO context and get a handle on the contents before applying a transformation to it which returns another IO, and we've done this in a chain.
+
+It's very similar to the first way we approached composition, we are nesting our calls, we're delaying evaluation using the function we've created to wrap the composition, we just have the additional need to nest the flatMaps here as well.
 
 All in all it works, but it's not particularly easy to read.
 
@@ -218,11 +247,11 @@ val comboFlatMap: Unit => Task[Boolean]  = _ =>
 
 
 
-So this is basically syntactic sugar for the hand cranked flatMap we've just seen and it's probably the most common form of handling this sort of monadic chain that you probably see. I think that's because it's much more readable, while doing the job.
+This is basically syntactic sugar for the hand cranked flatMap we've just seen and it's probably the most common form of handling this sort of monadic chain that you'll see. I think that's because it's a lot more readable, while doing the job.
 
-The opening line in the for comp sets the context of the comprehension, so in this case, the context is a Task, which the result when yielded will be wrapped in. So even though we have a handle on result as a boolean inside, the return value will be a Task[Boolean]
+The opening line in the for comp sets the context of the comprehension, so in this case, the context is an IO, and the result when yielded will be wrapped in that. So even though we have a handle on result as a boolean inside of here, we're inside that IO context so the return value will be an IO[Boolean]
 
-However, we're still reliant on wrapping this eager composition inside a function call in order to delay it. 
+It's cleaner, but we're still reliant on wrapping this eager composition inside a function call in order to delay it. 
 
 It would be nice if we could achieve what we did with the standard libraries compose and andThen, wouldn't it?
 
@@ -236,12 +265,12 @@ val fnK: Kleisli[Task, Int, String] = ???
 
 The Kleisli allows us to compose functions while ignoring the context on the outputs. You can think of this as being like a Monad Transformer for functions.
 
-If we have a function with a signature of Int => Task[String], then when we lift that into the context of a Kleisli (again, another monad, turtles all the way down), we get a signature of Kleisli[Task, Int, String], that is the context is the first type parameter, the input the second and the extracted return type the third.
+If we have a function with a signature of Int => IO[String], then when we lift that into the context of a Kleisli (again, another monad, turtles all the way down), we get a signature of Kleisli[Task, Int, String], that is the context is the first type parameter, the input the second and the extracted return type the third.
 ----------------------------------------------------------------------------------------
 To lift a function into the context of a Kleisli, you call the apply method on the Kleisli. As we've seen, this can be explicitly or in the more usual syntax
-getEmployeeFromDb: Id => Task[Employee] = ???
-getEmployeeFromDbKleisli: Kleisli[Task, Id, Employee] = Kleisli.apply(getEmployeeFromDb)
-getEmployeeFromDbKleisli: Kleisli[Task, Id, Employee] = Kleisli(getEmployeeFromDb)
+getEmployeeFromDb: Id => IO[Employee] = ???
+getEmployeeFromDbKleisli: Kleisli[IO, Id, Employee] = Kleisli.apply(getEmployeeFromDb)
+getEmployeeFromDbKleisli: Kleisli[IO, Id, Employee] = Kleisli(getEmployeeFromDb)
 ----------------------------------------------------------------------------------------
 getEmployeeFromDbKleisli: Kleisli[Task, Id, Employee] = Kleisli(getEmployeeFromDb)
 processEmployeeKleisli: Kleisli[Task, Employee, Employee] = Kleisli(processEmployee)
@@ -261,17 +290,73 @@ comboKleisli: Kleisli[Task, Id, Int] = Kleisli(getEmployeeFromDb)
 
 So previously we'd lifted all of our functions into Kleisli in order to compose them, but the Kleisli itself provides the ability to perfrom both the lift and combination in a single step. You still need to lift the first function, but after that you can either use andThenK or composeK if you're using Scalaz, or Cats simply overloads the andThen operator so there's no change between providing a function or kleisli wrapped function in the chain.   
 
-The only thing remaining to do is extract our combined function out of the kleisli that's wrapping it.
 ----------------------------------------------------------------------------------------
-comboFn: Id => Task[Int] = (Kleisli(getEmployeeFromDb) 
-                                    andThenK processEmployeeKleisli 
-                                        andThenK getEmployeeFromDbKleisli).run
-
-we do that by calling the run function on the kleisli.run
+Being a wizard is great, you get to wear cool clothes, wave a staff about and read arcane symbols.
 
 ----------------------------------------------------------------------------------------
+ScalaZ has some arcane symbols. Here we have the little fish. And this operator is a drop in replacement for the combination methods we've seen.
+
+The fish swims in the direction that you would read that combination, so this is an andThen. If the fish pointed or swam to the left it would be the same as compose.
+
+Below we have the big bish. This is the andThenK or composeK, and the direction tells us which it is.
+
+Some people like these sort of symbols, and I have a soft spot for them, but at the same time, you need to recognise that trying to google something like this is a little tricky and there's no helper as to what they do from the naming. You have to know what it is first.
+
+If you use Cats, then there's no choice to be made, it doesn't have these symbols.
+
+So now we've seen the big fish, little fish and cardboard box, it's time to retrieve our function back from the Kleisli.
 ----------------------------------------------------------------------------------------
+dot run. that;s it. So if you want to retrieve the function back, calling the run method will return you your extracted function. At the same time you don't need to do it because the apply method on your constructed Kleisli will pass through the arguments you provide it into the encapsulated function. So you don't need to extract the function out to run it, but if you need to pull it out to pass it in to something that's requiring a different signature then dot run's how you do it.
 ----------------------------------------------------------------------------------------
+Part 4 - What was the point?
+
+Readability
+
+As you can see, an advantage of Functional composition is this ability to go from a very small, concise piece of code, to a much larger, very verbose piece.
+
+Noe, the top shows a couple of objects being passed in to a method which has responsibility for constructing the handler. Traditionally, a lot of the functionality shown in the second example occurs within the createHandler method and may or may not be hidden away behind access modifiers.
+
+What I like about the composed version is the story that it tells.
+
+Now, you can do kind of this in the oo model, if you follow 'clean coding' practices, but I feel that in practice this doesn't tell the story as cleanly, it tends to be eager and the nested calls / application get in the way of reading what's going on, in the way we've seen earlier. Plus, by default it tends to be encapsulated within classes.
+
+Also, if you aren't happy with the block of code constructing the handler in the composition example, you can always go ahead and encapsulate that inside another function and go and hide it somewhere.
+----------------------------------------------------------------------------------------
+Reusability
+
+Another thing I like about having the construction exposed is that it acts as a constant reminder that you have these blocks or chunks available for use.
+
+The highlighted sections show how through the organisation of these functions, that a different kind of handler may be able to reuse some of these components, perhaps replacing the transcoded handler parts or just the calculateTimecodeData function.
+
+Of course, reusability is a key part of all software design. The DRY principle is well known, but perhaps this method provides a clearer description of the program as it's composed. One thing you might notice with a more functional approach is the distinction between the description of the program and the execution of it. A line perhaps somewhat more blurred in other approaches.
+----------------------------------------------------------------------------------------
+
+Robustness
+
+I had to massage this a little to get a word starting with R, but this is one of the best things I've found with Functional Composition.
+
+I love the testing. Mainly because I dislike working with mockito, deep mocking and generally having these huge object dependencies thrown around. To the point where I view it as a code smell. Now, I know that many people really like mockito, and it is a fantastic library and when you need to mock a huge Java class, then it's much better than the alternative.
+
+But imagine a world where you didn't need to do that. And that's the world that I like to pretend I live in. And this is what you get. You want to stub a list of files for a function? Go ahead, ignore the input and just return whatever you need.
+
+How about testing failure response? No problem, just blow it up.
+
+And for those times when you need to verify interaction with a function, you can use a promise or a ref to grab whatever the function was called with.
+----------------------------------------------------------------------------------------
+Downsides
+
+I gave three benefits, so I feel it's only fair to point out two downsides.
+
+Firstly there is a time investment, everything unknown requires that investment to learn. So there is a cost involved.
+
+You need to consider if it raises the barrier to entry, and I guess this is down to the individual team to find what works for you.
+
+Despite what you may think coming to a conference like this, the vast majority of Scala developers do not appear to be writing highly functional code in Scala. Not everyone is able to use the cool functional libraries and tools you hear about. There is a lot of Jala in production and a lot of functional in the small. Map Filter Magic.
+
+It's hard enough hiring Scala Developers, how easy is it hiring scala developers that have or can learn these skills? Do the benefits gained from keeping developers stimulated, growing and happy outweigh the cost?
+
+Another downside is that it changes the way you tend to navigate a little. With an oo approach, jumping to the definition of an injected class is superfast in your favourite IDE. With function signatures, you may end up popping over to usages to see the source of the function instead. Your mileage may vary.
+
 ----------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------

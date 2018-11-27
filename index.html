@@ -55,20 +55,7 @@
           <section data-transition="convex-in concave-out" data-background="lib/images/blur-clock-clock-face-280361.jpg">
 
               <aside class="notes">
-                  Complexity is the arch nemesis of better, more correct and more robust software.
-
-                  We are going to look at how we can use functional composition to reduce complexity
-                  and give ourselves another approach to writing software to be applied when it makes
-                  sense to do so.
-
-                  When it makes sense could range from never to every time, and that will depend on your
-                  team, your style, your domain.
-
-                  I love functional programming, it excites me, and I'm very lucky to be working on a team
-                  which aligns in style and approach.
-
-                  But everyone is different and the beauty and bain of scala is that it allows for a mix of
-                  approaches and styles from OOP and FP that can be combined in a vast number of ways.
+                  NOTES
               </aside>
           </section>
 
@@ -76,30 +63,6 @@
 
 
 				<section data-background="lib/images/background.jpg">
-					<!-- <section data-transition="none">
-				    <h3>Outline</h3>
-						<object type="image/svg+xml" data="lib/svg/outline1.svg">
-						  Your browser does not support SVG
-						</object>
-				 </section>
-				 <section data-transition="none">
-				    <h3>Outline</h3>
-						<object type="image/svg+xml" data="lib/svg/outline2.svg">
-						  Your browser does not support SVG
-						</object>
-				 </section>
-				 <section data-transition="none">
-				    <h3>Outline</h3>
-						<object type="image/svg+xml" data="lib/svg/outline3.svg">
-						  Your browser does not support SVG
-						</object>
-				 </section>
-				 <section data-transition="none">
-				    <h3>Outline</h3>
-						<object type="image/svg+xml" data="lib/svg/outline4.svg">
-						  Your browser does not support SVG
-						</object>
-				 </section> -->
 				 <section data-transition="none">
 				    <h3>Outline</h3>
 						<object type="image/svg+xml" data="lib/svg/outline.svg">
@@ -110,20 +73,13 @@
 
 
 
-
-
-
-				
-
-
-
 				<section data-background="lib/images/background.jpg">
 
 					<section 
 					data-transition="convex-in concave-out" data-background="lib/images/books-bookshelf-encyclopedia-34592.jpg">
 
 					<div class="headerBox">
-						<h2 class="stroke">Functional composition</h2>
+						<h2 class="stroke">Functions and composition</h2>
 						<br>
 						<h3 class="stroke">using the standard library</h3>
 					</div>
@@ -936,8 +892,21 @@
 						<section data-transition="convex-in concave-out">
 							<div>
 								<h2>Readability</h2>
+								<h3>From</h3>
 								<pre class="scala"><code data-trim>
-									
+									handler = 
+									TimecodeUpdateHandler
+									.createHandler(TimecodesDao, notificationPublisher)
+								</code></pre>
+
+								<h3>To</h3>
+								<pre class="scala"><code data-trim>
+									transcodedTimecodeHandler =
+									TranscodedTimecodeHandler.splitProgrammeParts andThen
+									TranscodedTimecodeHandler.calculateTimecodeData andThen
+									TimecodesDao.upsert(xa) andThen
+									TimecodeHandler.handleNotifications(notificationPublisher) andThen
+									TimecodeHandler.handleFailure
 								</code></pre>
 								
 							</div>
@@ -950,8 +919,13 @@
 						<section data-transition="convex-in concave-out">
 							<div>
 								<h2>Reusability</h2>
-								<pre class="scala"><code data-trim>
-									
+								<pre class="scala"><code data-trim data-noescape>
+									transcodedTimecodeHandler =
+									<mark>TranscodedTimecodeHandler</mark>.splitProgrammeParts andThen
+									<mark>TranscodedTimecodeHandler</mark>.calculateTimecodeData andThen
+									TimecodesDao.upsert(xa) andThen
+									<mark>TimecodeHandler</mark>.handleNotifications(notificationPublisher) andThen
+									<mark>TimecodeHandler</mark>.handleFailure
 								</code></pre>
 								
 							</div>
@@ -963,9 +937,25 @@
 						<section data-transition="convex-in concave-out">
 							<div>
 								<h2>Robustness (Testing)</h2>
+								<h4>Stubbing</h4>
 								<pre class="scala"><code data-trim>
-									val amsGetFilesForProdId: ProductionId => IO[List[File]] =
-										_ => IO.pure(amsFiles)
+									val getFilesForProduction: Production => IO[List[File]] =
+										_ => IO.pure(files)
+
+									val statusPublisher: StatusMessage => IO[Unit] =
+										_ => IO.raiseError(new Exception("oh noes!"))
+
+								</code></pre>
+
+								<br>
+								<h4>Mocking</h4>
+								<pre class="scala"><code data-trim>	
+
+									val publishedMessage: Promise[TimecodeMessage] = Promise()
+
+									val timecodePublisher: TimecodeMessage => IO[Unit] =
+										message => IO(publishedMessage.success(message))
+
 								</code></pre>
 								
 							</div>
@@ -973,6 +963,7 @@
 								
 							</aside>
 						</section>
+
 
 						<section data-transition="convex-in concave-out">
 							<div>
@@ -1024,7 +1015,7 @@
 							<strong>Wizard</strong> Photo by David Clode<br>
 							<strong>Pair programming</strong> Photo by Alvaro Reyes<br>
 							<strong>Cloud</strong> Photo by Gabriel Lamza<br>
-							<strong>Baloon</strong> Photo by Blake Cheek<br>
+							<strong>Balloon</strong> Photo by Blake Cheek<br>
 						</section>
 
 						<section>

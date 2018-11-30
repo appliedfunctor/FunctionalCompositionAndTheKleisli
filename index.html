@@ -55,7 +55,15 @@
           <section data-transition="convex-in concave-out" data-background="lib/images/blur-clock-clock-face-280361.jpg">
 
               <aside class="notes">
-                  NOTES
+              	<ul>
+                  <li>Building softweare hard - complex</li>
+                  <li>Like me, scala not first - baggage</li>
+                  <li>oo/fp diff scala play both</li>
+                  <li>illustrate watch - object, function king</li>
+                  <li>evaluate http frameworks, scalatra -> http4s</li>
+                  <li>map, filter magic</li>
+                  <li>recently looking at a more functional way of hanging together</li>
+              </ul>
               </aside>
           </section>
 
@@ -65,9 +73,19 @@
 				<section data-background="lib/images/background.jpg">
 				 <section data-transition="none">
 				    <h3>Outline</h3>
-						<object type="image/svg+xml" data="lib/svg/outline.svg">
-						  Your browser does not support SVG
-						</object>
+					<object type="image/svg+xml" data="lib/svg/outline.svg">
+					  Your browser does not support SVG
+					</object>
+
+					<aside class="notes">
+		              	<ul>
+		                  <li>start with what fn + comp are</li>
+		                  <li>then composing standard lib</li>
+		                  <li>b4 pressing on to composing higher kinded types</li>
+		                  <li>BASICS - STANDARD LIB - Higher Kinded Types</li>
+		              </ul>
+		            </aside>
+
 				 </section>
 				</section>
 
@@ -83,25 +101,12 @@
 						<br>
 						<h3 class="stroke">using the standard library</h3>
 					</div>
-
 					<aside class="notes">
-
-                        To start we'll look at what a function is and how we can compose using the standard library
-                        then we'll look at composing with higher kinded types
-                        before considering configuration injection.
-
-
-
-						<ul>
-							<li>What is a function?</li><br>
-							<li>What is composition?</li><br>
-							<li>The standard library:</li><br>
-							<ul>
-								<li>compose</li><br>
-								<li>andThen</li><br>
-							</ul>
-						</ul>
-					</aside>
+		              	<ul>
+		                  <li>Part 1</li>
+		              </ul>
+		            </aside>
+					
 				</section>
 
 
@@ -119,26 +124,14 @@
 							}
 						</code></pre>
                         <aside class="notes">
-
-                            I'd like to take you back in time, to when you first encountered Scala.
-                            If your experience was anything like mine, then you probably encountered a def like this.
-                            Even if the syntax is a little different, it's fairly easy to recognise the argument,
-                            return type and implementation, I'd say that it's quite familiar whether you've come from
-                            Java, Javascript, C# or Python, In fact it's very similar to python, uses a def keyword and
-                            everything.
-
-                            It looks like a function, it walks and talks like a function. In fact if we were using python,
-                            it would be a function, but In Scala, we're a little more strict with our typing.
-
-                            The problem with this is, that despite how accessible it is when you come to Scala, it isn't
-                            actually a function. It's a method.
-
-
-                            <ul>
-                                <li>Take you back in time, first encountered Scala</li><br>
-                                <li>Not a function -> is a method.</li><br>
-                            </ul>
-                        </aside>
+		              	<ul>
+		                  <li>take back in time</li>
+		                  <li>exp anything like mine, prob enc a def</li>
+		                  <li>easy to recognise - arg, ret, imp</li>
+		                  <li>looks like</li>
+		                  <li>prob -isn't fn, is method.</li>
+		              </ul>
+		            </aside>
 					</section>
 
 
@@ -162,29 +155,13 @@
 							}
 						</code></pre>
                         <aside class="notes">
-
-                            So if what we've just seen is not a function, but a method, then what is a function,
-                            what is a method and what is the difference?
-
-                            Let's illustrate this with an example.
-
-                            Here we have backwards which is a method that returns a string. We know this because the return
-                            type is a String.
-
-                            getBackwards is a method that takes no arguments and returns a function of String to String,
-                            that is the return type is a function with the same signature as backwards, it takes a string
-                            and returns a string.
-
-                            You can use these in the same way, applying them with an argument yields a result that you
-                            can print, but when we try to assign the 'functions' to variables, getBackwards works, but
-                            backwards does not.
-
-                            <ul>
-                                <li>So what's a method, what's a function?</li><br>
-                                <li></li><br>
-                                <li></li><br>
-                            </ul>
-                        </aside>
+			              	<ul>
+			                  <li>So if not a fn. What is fn, meth, diff</li>
+			                  <li>illustrate</li>
+			                  <li>use in same way</li>
+			                  <li>cant assign to val</li>
+			              </ul>
+			            </aside>
 					</section>
 
 
@@ -209,13 +186,13 @@
 							}
 						</code></pre>
                         <aside class="notes">
-
-                            <ul>
-                                <li>So what's a method, what's a function?</li><br>
-                                <li></li><br>
-                                <li></li><br>
-                            </ul>
-                        </aside>
+			              	<ul>
+			                  <li>Can take the fn from method and store</li>
+			                  <li>need to give compiler a little more info</li>
+			                  <li>just assigning wont work</li>
+			                  <li></li>
+			              </ul>
+			            </aside>
 					</section>
 
 
@@ -239,15 +216,12 @@
 							}
 						</code></pre>
                         <aside class="notes">
-                            Now, we can actually take the function from a method and store it in a val, but we need to
-                            give the compiler a little more explicit information to do so.
-
-                            As seen, just assigning it to a val won't work, because there's a little more work that needs
-                            to be done in order to be able to pass a function around as a variable.
-
-                            Applying using an underscore or explicitly stating the type of the val is enough to trigger
-                            this, but this shows us that there is a difference between a method and a function.
-                        </aside>
+			              	<ul>
+			                  <li>Applying using underscore or eplciit type</li>
+			                  <li>Key take a away: difference</li>
+			                  <li>Not the same thing</li>
+			              </ul>
+			              </aside>
 					</section>
 
 
@@ -265,18 +239,14 @@
 							}		
 						</code></pre>
                         <aside class="notes">
-                            We can store a function as a val, and unlike the def, this is a function.
-                            previously, we saw that a def could create a function, and be coerced to return a function
-                            but in this case we are directly assigning it.
-
-                            There is an important distinction.
-
-                            A val is eagerly evaluated, that is the value is evaluated and assigned when the val is
-                            declared, however this occurs once.
-
-                            A def is evaluated every time it is called.
-
-                        </aside>
+			              	<ul>
+			                  <li>Can store fn as val</li>
+			                  <li>unlike def is function. syntactic sugar</li>
+			                  <li>def create fn and be coerced to return an fn</li>
+			                  <li>distinction</li>
+			                  <li>eager evaluation vs every call</li>
+			              </ul>
+			              </aside>
 					</section>
 
 
@@ -293,22 +263,14 @@
 								println(backwards("fish"))
 							}		
 						</code></pre>
-                        <aside class="notes">
-                            A lazy val is like a regular val, but it isn't evaluated when it's declared, it's evaluated
-                            when first called or used.
-
-                            So if we don't call it, it never gets evaluated
-
-                            If we call or use it three times, the right hand side is evaluated once, on the first use.
-
-                            So now we know that
-                                - a def is evaluated every time you call it, just like a function
-                                - a val is evaluated once, when declared
-                                - a lazy val is evaluated once, the first time it is used.
-
-                            Let's look at what a function is.
-
-                        </aside>
+                       <aside class="notes">
+			              	<ul>
+			                  <li>evaluation on first call</li>
+			                  <li>no call, never eval</li>
+			                  <li>recap: def, val, lazy val</li>
+			                  <li>look at what a fn is</li>
+			              </ul>
+			              </aside>
 					</section>
 
 
@@ -316,7 +278,7 @@
 						<h2>Function1[A, B]</h2>
 						<br>
 						<pre class="scala"><code data-trim data-noescape>
-							Object Main extends App {
+							object Main extends App {
 
 								val backwards = new Function1[String, String] {
 									override def apply(input: String) = 
@@ -327,24 +289,15 @@
 							}
 						</code></pre>
                         <aside class="notes">
-                            A function as we pass it around in scala is object, so you can think of a function as being
-                            an instance of a particular trait that exists on the heap.
-
-                            When we assign a function to a val, we store the memory location of the function object in
-                            the val.
-
-                            When we apply a function, we call the object's apply method with the arguments
-
-                            Here we are explicitly
-                            creating a function1 object which takes two type parameters. The first is the input and the
-                            second the output of the function.
-
-                            In fact, String => String is syntactic sugar for this object.
-
-                            This is important when thinking about how a def is evaluated on every call. If you return a
-                            function from a def, you are creating a new function object every time it's called.
-
-                        </aside>
+			              	<ul>
+			                  <li>a fn -> object</li>
+			                  <li>when assigned, mem loc</li>
+			                  <li>apply</li>
+			                  <li>explicit fn1 object from trait</li>
+			                  <li>syntactic sugar</li>
+			                  <li>impact of new fn every def call</li>
+			              </ul>
+			              </aside>
 					</section>
 
 
@@ -352,7 +305,7 @@
 						<h2>Function0[+R]</h2>
 						<br>
 						<pre class="scala"><code data-trim>
-							Object Main extends App {
+							object Main extends App {
 
 								// () => String
 								val backwards = new Function0[String] {
@@ -363,12 +316,12 @@
 							}
 						</code></pre>
                         <aside class="notes">
-                            The function1 defines a function with 1 input parameter, but it is not the only function
-                            trait. There are as many function traits as there are tuples, 23 of them from 0 to 22.
-
-                            A function0 as seen here is a zero argument function, the same as empty brackets to something.
-
-                        </aside>
+			              	<ul>
+			                  <li>fn1 defines fn 1 inoput parameter</li>
+			                  <li>not only trait: 23 -> 0 to 22</li>
+			                  <li>fn0 is 0 arg fn</li>
+			              </ul>
+			              </aside>
 					</section>
 
 
@@ -382,16 +335,12 @@
 						</code></pre>
 
                         <aside class="notes">
-                            We've seen the syntactic sugar describing function signatures now. Here we have two
-                            functions with references stored in vals; double and inc.
-
-                            These have been implemented using the abbreviated syntax, which is the same as
-                            a to a * 2 and number => number + 1.
-
-                            composition is a means to take multiple functions and put them together to produce
-                            a combined effect.
-
-                        </aside>
+			              	<ul>
+			                  <li>Seen syntactic sugar. Here 2 fns</li>
+			                  <li>double, inc</li>
+			                  <li>composition is a means to produce acombined effect</li>
+			              </ul>
+			              </aside>
 
 					</section>		
 
@@ -412,10 +361,12 @@
 						</code></pre>
 
                         <aside class="notes">
-                            We can achieve this most easily by chaining application of the functions.
-                            Here we apply double with the input 5 and then we take the output of that function
-                            call and feed it in to the second function as an argument.
-                        </aside>
+			              	<ul>
+			                  <li>we can achieve most easy chaining application</li>
+			                  <li>apply double with 5</li>
+			                  <li>feed output into second fn</li>
+			              </ul>
+			              </aside>
 					</section>		
 
 					<section data-transition="convex-in concave-out">
@@ -434,13 +385,13 @@
 						</code></pre>
 
                         <aside class="notes">
-                            This can also be achieved by inlining the function calls rather than storing the
-                            intermediate result in a val.
-
-                            However, it would be even more useful to be able to compose functions without applying
-                            them, that way we could reuse  blocks of logic by composing them from other functions
-                            whether those other functions are simple single functions or composed blocks themselves.
-                        </aside>
+			              	<ul>
+			                  <li>Also achieve via inlining vs storing intermediate result in val</li>
+			                  <li>even more useful compose without applying</li>
+			                  <li>reuse blocks of logic by composing them from other fns</li>
+			                  <li>simple single fns or composed blocks themselves</li>
+			              </ul>
+			              </aside>
 
 					</section>		
 
@@ -458,21 +409,15 @@
 						</code></pre>
 
                         <aside class="notes">
-                            To achieve this we could create a new function
-
-                            This delays the execution of the composed functions until we apply this function and
-                            pass in the input argument.
-
-                            then it feeds into the first and executes down the chain until it returns the output from
-                            the tail.
-
-                            However the syntax here doesn't scale very well, it becomes harder to read as you increase
-                            the depth of nesting.
-
-                            And you have the added difficulty of attempting to read the chain from right to the left.
-
-                            Let's look at what other options there are.
-                        </aside>
+			              	<ul>
+			                  <li>If wanted produce reusable can create a new fn</li>
+			                  <li>delays execution</li>
+			                  <li>feed into first, flow doesn chain</li>
+			                  <li>Syntax doesn't scale - inc depth of nesting</li>
+			                  <li>Added diff - read chain right to left</li>
+			                  <li>lets look at other options</li>
+			              </ul>
+			              </aside>
 
 					</section>		
 
@@ -489,6 +434,11 @@
 						<div class="headerBox">
 							<h2>What else does the standard library provide?</h2>	
 						</div>
+						<aside class="notes">
+			              	<ul>
+			                  <li>Part 2</li>
+			              </ul>
+			              </aside>
 					</section>	
 
 
@@ -514,18 +464,13 @@
 						</code></pre>
 
                         <aside class="notes">
-                            So we have the compose function.
-
-                            and what this does is allow you to provide another function as an argument to your current
-                            function and it will compose the two functions into a new function, just like we did manually
-                            where the other function is applied, followed by the current function.
-
-                            This operates just like the dot compose notation in maths where a dot b produces as function
-                            where the argument is first applied to b and then the output of that is applied to a.
-
-                            or in this case whatever is passed in is doubled and then incremented.
-
-                        </aside>
+			              	<ul>
+			                  <li>provide fn as argument</li>
+			                  <li>like dot notation in maths</li>
+			                  <li>a dot b</li>
+			                  <li>passed in doubled then incremented</li>
+			              </ul>
+			              </aside>
 
 					</section>	
 
@@ -544,16 +489,13 @@
 						</code></pre>
 
                         <aside class="notes">
-                            So we have improved the readability somewhat using the compose method by avoiding the
-                            nested calls, and we can use whitespace to make it a little easier still
-
-                            but we're still stuck with this problem where we have to read from right to left.
-
-                            If that's easier for you then compose is your function and you can stop there.
-
-                            If it's not however, there is another method provided to us that we can use instead.
-
-                        </aside>
+			              	<ul>
+			                  <li>improved reability by avoid nested calls</li>
+			                  <li>whitespace</li>
+			                  <li>right to left reading problem</li>
+			                  <li>can stop otherwise other method</li>
+			              </ul>
+			            </aside>
 					</section>	
 
 
@@ -578,15 +520,13 @@
 						</code></pre>
 
                         <aside class="notes">
-                            and it's called andThen. it works exactly the same as compose only the order of
-                            composition is reversed.
-
-                            so if we use it to cokpose inc and double, it will apply inc first, followed by double
-
-                            whcih has the effect of switching the reading order of the composed functions from
-                            right to left to left to right.
-
-                        </aside>
+			              	<ul>
+			                  <li>Called andThen</li>
+			                  <li>works same as compse reversed</li>
+			                  <li>example</li>
+			                  <li>effect switchig reading order to left to right</li>
+			              </ul>
+			              </aside>
 					</section>	
 
 
@@ -604,10 +544,12 @@
 						</code></pre>
 
                         <aside class="notes">
-                            I personally prefer this style, I find it easier to read and reason about, but as
-                            we've seen, you have the choice. So use whatever works best for you.
-
-                        </aside>
+			              	<ul>
+			                  <li>Personally prefer this style</li>
+			                  <li>Maybe prefer one over the other</li>
+			                  <li>Use whatever best for you</li>
+			              </ul>
+			              </aside>
 					</section>	
 
 
@@ -629,13 +571,15 @@
 							val e: Config => Json = a andThen b andThen c andThen d
 						</code></pre>
 
-                        <aside class="notes">
-                            We've seen this already, but I just want to be explicit and clear that in order to
-                            compose functions, the signatures must match.
-
-                            If your output from one function is a String, then the next function in the chain must take
-                            a string as it's input.
-                        </aside>
+                        <<aside class="notes">
+			              	<ul>
+			                  <li>Seen this one already - explicit</li>
+			                  <li>if output string, next input</li>
+			                  <li>--</li>
+			                  <li>here have config to dbresult ...</li>
+			                  <li>can do, can't do</li>
+			              </ul>
+			              </aside>
 					</section>	
 
 
@@ -662,24 +606,15 @@
 						</code></pre>
 
                         <aside class="notes">
-                            before we wrap up this section, I'd like to highlight a few gotchas.
-
-                            result here is perfectly fine.
-
-                            unitNum is a function of Unit to Int and double is an Int to Int.
-
-                            the signatures line up and we can compose them.
-
-                            -slide change-
-
-                            however if we have laterNum, and try to substitute it for unitNum, it won't work.
-
-                            this is because empty brackets is treated as no arguments, which means that laterNum
-                            is not a function1[Unit, Int], but a function0[Int]
-
-                            and of all 23 functions, only function1 has the methods compose and andThen defined
-                            on it.
-                        </aside>
+			              	<ul>
+			                  <li>To wrap up highlight a gotcha</li>
+			                  <li>result perfectly fine - signature explanation</li>
+			                  <li>--</li>
+			                  <li>laternum won't work - empty brackets -> no args</li>
+			                  <li>of all 23 fn traits, only fn1 has compose andThen</li>
+			                  <li>brings to end of standard lib</li>
+			              </ul>
+			              </aside>
 
 					</section>	
 
@@ -698,21 +633,39 @@
 							</div>
 							<aside class="notes">
 								<ul>
-									<li>The standard library:</li><br>
-									<ul>
-										<li>map</li><br>
-										<li>flatMap</li><br>
-									</ul>
-									<li>The Kleisli</li><br>
+									<li>Part 3 - Higher Kinded Types</li>
 								</ul>
 							</aside>
 						</section>
 
 						<section data-background="lib/images/george-bonev-296136-unsplash.jpg">
+							<aside class="notes">
+								<ul>
+									<li>Monads</li>
+									<li>context/box wraps type</li>
+									<li>e.g. variable</li>
+									<li>box takes a type -> fancy say generic</li>
+									<li>The box provides context, LIST / OPTION</li>
+									<li>Monad can take more than one type, or types in other boxes</li>
+									<li>HP/amazon</li>
+									<li>think of a boxed cat as a turtle</li>
+								</ul>
+							</aside>
 						</section>
 
 
 						<section data-background="lib/images/tanguy-sauvin-3121-unsplash.jpg">
+							<aside class="notes">
+								<ul>
+									<li>In fact, it's turtles all the way down</li>
+									<li>Important take away: map, flatmap</li>
+									<li>pet the cat - functor map</li>
+									<li>monad - flatten. turtles to cats</li>
+									<li>e.g. List[String] map each to List[Char]</li>
+									<li>Flatten. Box[Box[Thing]] to Box[Thing]</li>
+									<li>Flatmap combines map + flatten</li>
+								</ul>
+							</aside>
 						</section>
 
 
@@ -727,9 +680,16 @@
 							val updateEmployeeInDb: Employee => IO[Int]
 						</code></pre>
 
-                        <aside class="notes">
-                            Quite commonly, you'll have functions inside a context such as a Future, Task or IO, and this presents a problem. As we've already seen, in order to compose, our output from one function must form the input to the next.
-                        </aside>
+                       	<aside class="notes">
+							<ul>
+								<li>Commonly functions inside context future, task IO</li>
+								<li>presents problem composing (as seen signature chain)</li>
+								<li>when start calling fns returning inside context</li>
+								<li>could change input to match signature</li>
+								<li>might result in set of small blocks less composable / interchangeable w/ othr blocks</li>
+								<li>might pollute signatures</li>
+							</ul>
+						</aside>
 						</section>	
 
 						<section data-transition="convex-in concave-out">
@@ -746,8 +706,16 @@
 						</code></pre>
 
                         <aside class="notes">
-  
-                        </aside>
+							<ul>
+								<li>flatmap reach inside IO context. handle on contents</li>
+								<li>apply xformation, to return another IO in chain</li>
+								<li>similar to first approach to composition</li>
+								<li>nesting calls</li>
+								<li>delaying evaluation</li>
+								<li>works, not easy to read</li>
+								<li>go one better using standard lib</li>
+							</ul>
+						</aside>
 						</section>	
 
 						<section data-transition="convex-in concave-out">
@@ -763,8 +731,14 @@
 						</code></pre>
 
                         <aside class="notes">
-                           
-                        </aside>
+							<ul>
+								<li>syntactic sugar for hand cranked flatmap - common</li>
+								<li>opening line sets context</li>
+								<li>cleaner, relaint on wrapping eager composition in fn</li>
+								<li>nice to achieve what we did withy standard libraries</li>
+								<li>meet the Kleisli</li>
+							</ul>
+						</aside>
 						</section>	
 
 						<section data-transition="convex-in concave-out">
@@ -776,7 +750,10 @@
 						</code></pre>
 
                         <aside class="notes">
-                            
+                            <ul>
+                            	<li>Allows us to compose fns while ignoring context</li>
+                            	<li>fn signature -> when lift kleisli get:</li>
+                            </ul>
                         </aside>
 						</section>	
 
@@ -793,7 +770,10 @@
 						</code></pre>
 
                         <aside class="notes">
-                            
+                            <ul>
+                            	<li>To lift call apply</li>
+                            	<li>either explicit or sugared syntax for apply method</li>
+                            </ul>
                         </aside>
 						</section>	
 
@@ -840,14 +820,14 @@
 
 						<section data-transition="convex-in concave-out">
 							<pre class="scala"><code data-trim>
-							val comboKleisli: Kleisli[Task, Id, Int] = 
+							val comboKleisli: Kleisli[IO, Id, Int] = 
 								Kleisli(getEmployeeFromDb)
 									>=> Kleisli(processEmployee)
 										>=> Kleisli(updateEmployeeInDb)
 						</code></pre>
 						<br>
 						<pre class="scala"><code data-trim>
-							val comboKleisli: Kleisli[Task, Id, Int] = 
+							val comboKleisli: Kleisli[IO, Id, Int] = 
 								Kleisli(getEmployeeFromDb)
 									>==> processEmployee
 										>==> updateEmployeeInDb
@@ -967,9 +947,9 @@
 
 						<section data-transition="convex-in concave-out">
 							<div>
-								<h2>Downside</h2>
+								<h2>Downsides</h2>
 								
-								Time investment to understand 
+								Are there any?
 								
 							</div>
 							<aside class="notes">

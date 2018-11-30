@@ -27,7 +27,7 @@ Basics, Standard Lib, Higher Kinded Types.
 ----------------------------------------------------------------------------------------
 I'd like to take you back in time, to when you first encountered Scala. If your experience was anything like mine, then you probably encountered a def like this. Even if the syntax is a little different, it's fairly easy to recognise the argument, return type and implementation, I'd say that it's quite familiar whether you've come from Java, Javascript, C# or Python, In fact it's very similar to python, uses a def keyword and everything.
 
-It looks like a function, it walks and talks like a function. In fact if we were using python, it would be a function, but In Scala, we're a little more strict with our typing.
+It looks like a function, it walks and talks like a function. In fact if we were using python, it would be a function.
 
 The problem with this is, that despite how accessible it is when you come to Scala, it isn't actually a function. It's a method.
 ----------------------------------------------------------------------------------------
@@ -46,6 +46,7 @@ Now, we can actually take the function from a method and store it in a val, but 
 
 As seen, just assigning it to a val won't work, because there's a little more work that needs to be done in order to be able to pass a function around as a variable.
 
+----------------------------------------------------------------------------------------
 Applying using an underscore or explicitly stating the type of the val is enough to trigger this, but the key take away here, is that it shows us that there is a difference between a method and a function.
 
 They are not the same thing.

@@ -1,1045 +1,1178 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+    <title>reveal.js</title>
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/aworton.css">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/aworton.css">
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
 
-		<!-- Font awesome brands -->
-		<link href="lib/css/fontawesome.min.css" rel="stylesheet">
-		<link href="lib/css/brands.min.css" rel="stylesheet">
+    <!-- Font awesome brands -->
+    <link href="lib/css/fontawesome.min.css" rel="stylesheet">
+    <link href="lib/css/brands.min.css" rel="stylesheet">
 
-		<style> .reveal i.fa { font-family:FontAwesome; font-style: normal; } </style>
+    <style> .reveal i.fa {
+        font-family: FontAwesome;
+        font-style: normal;
+    } </style>
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
 
 
-
-				<section data-background="lib/images/david-clode-533375-unsplash.jpg">
-					<div class="headerBox">
-            <h2>Functional Composition and the Kleisli</h2>
-            <h3>● ● ●</h3>
-            <h3><code><=<</code>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                A tale of two fish(es) 
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <code>>==></code></h3>
-            <br>
-            <br>
-            <h4>
-                Alexander Worton
+        <section data-background="lib/images/david-clode-533375-unsplash.jpg">
+            <div class="headerBox">
+                <h2>Functional Composition and the Kleisli</h2>
+                <h3>● ● ●</h3>
+                <h3><code><=<</code>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    A tale of two fish(es)
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <code>>==></code></h3>
                 <br>
-                Scala eXchange 2018
-            </h4>
-          </div>
+                <br>
+                <h4>
+                    Alexander Worton
+                    <br>
+                    Scala eXchange 2018
+                </h4>
+            </div>
         </section>
 
-          <section data-transition="convex-in concave-out" data-background="lib/images/blur-clock-clock-face-280361.jpg">
-
-              <aside class="notes">
-              	<ul>
-                  <li>Building softweare hard - complex</li>
-                  <li>Like me, scala not first - baggage</li>
-                  <li>oo/fp diff scala play both</li>
-                  <li>illustrate watch - object, function king</li>
-                  <li>evaluate http frameworks, scalatra -> http4s</li>
-                  <li>map, filter magic</li>
-                  <li>recently looking at a more functional way of hanging together</li>
-              </ul>
-              </aside>
-          </section>
-
-
-
-
-				<section data-background="lib/images/background.jpg">
-				 <section data-transition="none">
-				    <h3>Outline</h3>
-					<object type="image/svg+xml" data="lib/svg/outline.svg">
-					  Your browser does not support SVG
-					</object>
-
-					<aside class="notes">
-		              	<ul>
-		                  <li>start with what fn + comp are</li>
-		                  <li>then composing standard lib</li>
-		                  <li>b4 pressing on to composing higher kinded types</li>
-		                  <li>BASICS - STANDARD LIB - Higher Kinded Types</li>
-		              </ul>
-		            </aside>
-
-				 </section>
-				</section>
-
-
-
-				<section data-background="lib/images/background.jpg">
-
-					<section 
-					data-transition="convex-in concave-out" data-background="lib/images/books-bookshelf-encyclopedia-34592.jpg">
-
-					<div class="headerBox">
-						<h2 class="stroke">Functions and composition</h2>
-						<br>
-						<h3 class="stroke">using the standard library</h3>
-					</div>
-					<aside class="notes">
-		              	<ul>
-		                  <li>Part 1</li>
-		              </ul>
-		            </aside>
-					
-				</section>
-
-
-					<section data-transition="convex-in concave-out">
-						<h2>What is a function?</h2>
-						<br>
-						<pre class="scala"><code data-trim>
-							object Main extends App {
-
-								def backwards(input: String): String = {
-									input.reverse
-								}
-
-								println(backwards("fish"))
-							}
-						</code></pre>
-                        <aside class="notes">
-		              	<ul>
-		                  <li>take back in time</li>
-		                  <li>exp anything like mine, prob enc a def</li>
-		                  <li>easy to recognise - arg, ret, imp</li>
-		                  <li>looks like</li>
-		                  <li>prob -isn't fn, is method.</li>
-		              </ul>
-		            </aside>
-					</section>
-
-
-
-					<section data-transition="convex-in concave-out">
-						<h2>A method</h2>
-						<br>
-						<pre class="scala"><code data-trim data-noescape>
-							object Main extends App {
-
-								def backwards(input: String): String = {
-									input.reverse
-								}
-
-								def getBackwards: String => String = {
-									input => input.reverse
-								}
-
-								println(backwards("fish"))
-								println(getBackwards("fish"))
-							}
-						</code></pre>
-                        <aside class="notes">
-			              	<ul>
-			                  <li>So if not a fn. What is fn, meth, diff</li>
-			                  <li>illustrate</li>
-			                  <li>use in same way</li>
-			                  <li>cant assign to val</li>
-			              </ul>
-			            </aside>
-					</section>
-
-
-
-
-					<section data-transition="convex-in concave-out">
-						<h2>Function vs Method</h2>
-						<br>
-						<pre class="scala"><code data-trim data-noescape>
-							object Main extends App {
-
-								def backwards(input: String): String = {
-									input.reverse
-								}
-
-								def getBackwards: String => String = {
-									input => input.reverse
-								}
-								
-								<mark><s>val fn = backwards</s></mark>
-								val fn2 = getBackwards
-							}
-						</code></pre>
-                        <aside class="notes">
-			              	<ul>
-			                  <li>Can take the fn from method and store</li>
-			                  <li>need to give compiler a little more info</li>
-			                  <li>just assigning wont work</li>
-			                  <li></li>
-			              </ul>
-			            </aside>
-					</section>
-
-
-
-					<section data-transition="convex-in concave-out">
-						<h2>Retrieving the function from a method</h2>
-						<br>
-						<pre class="scala"><code data-trim data-noescape>
-							object Main extends App {
-
-								def backwards(input: String): String = {
-									input.reverse
-								}
-
-								<mark><s>val back = backwards</s></mark>
-								val back2 = backwards _
-								val back3: String => String = backwards
-
-								println("back2: " + back2("reverse me"))
-								println("back3: " + back3("reverse me"))
-							}
-						</code></pre>
-                        <aside class="notes">
-			              	<ul>
-			                  <li>Applying using underscore or eplciit type</li>
-			                  <li>Key take a away: difference</li>
-			                  <li>Not the same thing</li>
-			              </ul>
-			              </aside>
-					</section>
-
-
-					<section data-transition="convex-in concave-out">
-						<h2>A function value</h2>
-						<br>
-						<pre class="scala"><code data-trim data-noescape>
-							object Main extends App {
-
-								<mark>val</mark> backwards: String => String = input => {
-									input.reverse
-								}
-
-								println(backwards("fish"))
-							}		
-						</code></pre>
-                        <aside class="notes">
-			              	<ul>
-			                  <li>Can store fn as val</li>
-			                  <li>unlike def is function. syntactic sugar</li>
-			                  <li>def create fn and be coerced to return an fn</li>
-			                  <li>distinction</li>
-			                  <li>eager evaluation vs every call</li>
-			              </ul>
-			              </aside>
-					</section>
-
-
-					<section data-transition="convex-in concave-out">
-						<h2>A lazy function value</h2>
-						<br>
-						<pre class="scala"><code data-trim data-noescape>
-							object Main extends App {
-
-								<mark>lazy val</mark> backwards: String => String = input => {
-									input.reverse
-								}
-
-								println(backwards("fish"))
-							}		
-						</code></pre>
-                       <aside class="notes">
-			              	<ul>
-			                  <li>evaluation on first call</li>
-			                  <li>no call, never eval</li>
-			                  <li>recap: def, val, lazy val</li>
-			                  <li>look at what a fn is</li>
-			              </ul>
-			              </aside>
-					</section>
-
-
-					<section data-transition="convex-in concave-out">
-						<h2>Function1[A, B]</h2>
-						<br>
-						<pre class="scala"><code data-trim data-noescape>
-							object Main extends App {
-
-								val backwards = new Function1[String, String] {
-									override def apply(input: String) = 
-										input.reverse
-								}
-
-								println(backwards("fish"))
-							}
-						</code></pre>
-                        <aside class="notes">
-			              	<ul>
-			                  <li>a fn -> object</li>
-			                  <li>when assigned, mem loc</li>
-			                  <li>apply</li>
-			                  <li>explicit fn1 object from trait</li>
-			                  <li>syntactic sugar</li>
-			                  <li>impact of new fn every def call</li>
-			              </ul>
-			              </aside>
-					</section>
-
-
-					<section data-transition="convex-in concave-out">
-						<h2>Function0[+R]</h2>
-						<br>
-						<pre class="scala"><code data-trim>
-							object Main extends App {
-
-								// () => String
-								val backwards = new Function0[String] {
-								override def apply() = "fish".reverse
-							  }
-
-							  println(backwards())
-							}
-						</code></pre>
-                        <aside class="notes">
-			              	<ul>
-			                  <li>fn1 defines fn 1 inoput parameter</li>
-			                  <li>not only trait: 23 -> 0 to 22</li>
-			                  <li>fn0 is 0 arg fn</li>
-			              </ul>
-			              </aside>
-					</section>
-
-
-					<section data-transition="convex-in concave-out">
-						<h2>What is composition?</h2>		
-						<br>				
-						<pre class="scala"><code data-trim>
-							val double: Int => Int = _ * 2	// (number => number * 2)
-
-							val inc: Int => Int = _ + 1	// (number => number + 1)
-						</code></pre>
-
-                        <aside class="notes">
-			              	<ul>
-			                  <li>Seen syntactic sugar. Here 2 fns</li>
-			                  <li>double, inc</li>
-			                  <li>composition is a means to produce acombined effect</li>
-			              </ul>
-			              </aside>
-
-					</section>		
-
-					<section data-transition="convex-in concave-out">
-						<h2>Chaining application</h2>		
-						<br>				
-						<pre class="scala"><code data-trim>
-							val double: Int => Int = _ * 2	// (number => number * 2)
-
-							val inc: Int => Int = _ + 1	// (number => number + 1)
-						</code></pre>
-
-						<br>
-						<pre class="scala"><code data-trim>
-							val doubled = double(5)
-
-							val incremented = inc(doubled)
-						</code></pre>
-
-                        <aside class="notes">
-			              	<ul>
-			                  <li>we can achieve most easy chaining application</li>
-			                  <li>apply double with 5</li>
-			                  <li>feed output into second fn</li>
-			              </ul>
-			              </aside>
-					</section>		
-
-					<section data-transition="convex-in concave-out">
-						<h2>Nesting (inline)</h2>		
-						<br>				
-						<pre class="scala"><code data-trim>
-							val double: Int => Int = _ * 2	// (number => number * 2)
-
-							val inc: Int => Int = _ + 1	// (number => number + 1)
-						</code></pre>
-
-						<br>
-
-						<pre class="scala"><code data-trim>
-							val result = inc(double(5))	// 11
-						</code></pre>
-
-                        <aside class="notes">
-			              	<ul>
-			                  <li>Also achieve via inlining vs storing intermediate result in val</li>
-			                  <li>even more useful compose without applying</li>
-			                  <li>reuse blocks of logic by composing them from other fns</li>
-			                  <li>simple single fns or composed blocks themselves</li>
-			              </ul>
-			              </aside>
-
-					</section>		
-
-
-					<section data-transition="convex-in concave-out">
-						<h2>Compose without applying</h2>		
-						<br>				
-						<pre class="scala"><code data-trim>
-							val doubleAndIncrement: Int => Int = number => {
-
-									inc(double(number))
-
-							}
-
-						</code></pre>
-
-                        <aside class="notes">
-			              	<ul>
-			                  <li>If wanted produce reusable can create a new fn</li>
-			                  <li>delays execution</li>
-			                  <li>feed into first, flow doesn chain</li>
-			                  <li>Syntax doesn't scale - inc depth of nesting</li>
-			                  <li>Added diff - read chain right to left</li>
-			                  <li>lets look at other options</li>
-			              </ul>
-			              </aside>
-
-					</section>		
-
-
-					
-
-
-				</section>
-
-
-				<section data-background="lib/images/background.jpg">
-
-					<section data-transition="convex-in concave-out" data-background="lib/images/giammarco-boscaro-380903-unsplash.jpg">
-						<div class="headerBox">
-							<h2>What else does the standard library provide?</h2>	
-						</div>
-						<aside class="notes">
-			              	<ul>
-			                  <li>Part 2</li>
-			              </ul>
-			              </aside>
-					</section>	
-
-
-					<section data-transition="convex-in concave-out">
-						<h2>The `compose` function</h2>		
-						<br>				
-						<pre class="scala"><code data-trim>
-							trait Function1[-T1, +R] {
-
-								def compose[A](g: (A) => T1): (A) => R
-
-							}
-						</code></pre>		
-
-						<br>
-						<h5>in use</h5>
-						<pre class="scala"><code data-trim>
-							val doubleAndIncrement: Int => Int = inc.compose(double)
-
-							val doubleAndIncrement: Int => Int = inc compose double
-
-							val result = doubleAndIncrement(5) // 11
-						</code></pre>
-
-                        <aside class="notes">
-			              	<ul>
-			                  <li>provide fn as argument</li>
-			                  <li>like dot notation in maths</li>
-			                  <li>a dot b</li>
-			                  <li>passed in doubled then incremented</li>
-			              </ul>
-			              </aside>
-
-					</section>	
-
-
-					<section data-transition="convex-in concave-out">
-						<h2>Reading right to left</h2>		
-						<br>				
-						<pre class="scala"><code data-trim>
-							val doThing: Int => Int = inc compose
-
-											double compose
-
-												inc compose
-
-													triple
-						</code></pre>
-
-                        <aside class="notes">
-			              	<ul>
-			                  <li>improved reability by avoid nested calls</li>
-			                  <li>whitespace</li>
-			                  <li>right to left reading problem</li>
-			                  <li>can stop otherwise other method</li>
-			              </ul>
-			            </aside>
-					</section>	
-
-
-					<section data-transition="convex-in concave-out">
-						<h2>andThen</h2>		
-						<br>				
-						<pre class="scala"><code data-trim>
-							trait Function1[-T1, +R] {
-
-								def andThen[A](g: (R) => A): (T1) => A
-
-							}
-						</code></pre>		
-						<br>
-						<h5>In use</h5>
-						<pre class="scala"><code data-trim>
-							val incrementAndDouble: Int => Int = inc.andThen(double)
-
-							val incrementAndDouble: Int => Int = inc andThen double
-
-							val result = incrementAndDouble(5) // 12
-						</code></pre>
-
-                        <aside class="notes">
-			              	<ul>
-			                  <li>Called andThen</li>
-			                  <li>works same as compse reversed</li>
-			                  <li>example</li>
-			                  <li>effect switchig reading order to left to right</li>
-			              </ul>
-			              </aside>
-					</section>	
-
-
-					<section data-transition="convex-in concave-out">
-						<h2>Reading left to right</h2>		
-						<br>				
-						<pre class="scala"><code data-trim>
-							val doThing: Int => Int = inc andThen
-
-											double andThen
-
-												inc andThen
-
-													triple
-						</code></pre>
-
-                        <aside class="notes">
-			              	<ul>
-			                  <li>Personally prefer this style</li>
-			                  <li>Maybe prefer one over the other</li>
-			                  <li>Use whatever best for you</li>
-			              </ul>
-			              </aside>
-					</section>	
-
-
-					<section data-transition="convex-in concave-out" id="fragments">
-						<h2>The signature for chaining</h2>		
-						<br>	
-
-						<q>The output from the previous function must match the input to the next function in your chain</q> 
-
-						<br>
-						<br>
-
-						<pre class="scala fragment"><code data-trim>
-							val a: Config => DbResult
-							val b: DbResult => BigInt
-							val c: BigInt => BigInt
-							val d: BigInt => Json
-
-							val e: Config => Json = a andThen b andThen c andThen d
-						</code></pre>
-
-                        <<aside class="notes">
-			              	<ul>
-			                  <li>Seen this one already - explicit</li>
-			                  <li>if output string, next input</li>
-			                  <li>--</li>
-			                  <li>here have config to dbresult ...</li>
-			                  <li>can do, can't do</li>
-			              </ul>
-			              </aside>
-					</section>	
-
-
-
-
-
-					<section data-transition="convex-in concave-out">
-						<h2>Can't compose, won't compose</h2>		
-						<br>		
-
-						<pre class="scala"><code data-trim data-noescape>
-							val unitNum: Unit => Int = Unit => 5
-
-							val double: Int => Int = _ * 2
-
-							val result = unitNum andThen double //Function1[Unit, Int]
-
-							<span class="fragment" data-fragment-index="1">// no Function1[(), Int] Function0[Int]</span>
-							val laterNum = () => 5
-							<br>
-							<span class="fragment" data-fragment-index="1"><mark><s>val other = laterNum andThen double</s></mark></span>
-
-							
-						</code></pre>
-
-                        <aside class="notes">
-			              	<ul>
-			                  <li>To wrap up highlight a gotcha</li>
-			                  <li>result perfectly fine - signature explanation</li>
-			                  <li>--</li>
-			                  <li>laternum won't work - empty brackets -> no args</li>
-			                  <li>of all 23 fn traits, only fn1 has compose andThen</li>
-			                  <li>brings to end of standard lib</li>
-			              </ul>
-			              </aside>
-
-					</section>	
-
-
-				</section>
-
-				<section data-background="lib/images/background.jpg">
-
-						<section 
-							data-transition="convex-in concave-out"
-							data-background="lib/images/alvaro-reyes-500044-unsplash.jpg">
-							<div class="headerBox">
-								<h2>Composing</h2>
-								<br>
-								<h3>with higher kinded types</h3>
-							</div>
-							<aside class="notes">
-								<ul>
-									<li>Part 3 - Higher Kinded Types</li>
-								</ul>
-							</aside>
-						</section>
-
-						<section data-background="lib/images/george-bonev-296136-unsplash.jpg">
-							<aside class="notes">
-								<ul>
-									<li>Monads</li>
-									<li>context/box wraps type</li>
-									<li>e.g. variable</li>
-									<li>box takes a type -> fancy say generic</li>
-									<li>The box provides context, LIST / OPTION</li>
-									<li>Monad can take more than one type, or types in other boxes</li>
-									<li>HP/amazon</li>
-									<li>think of a boxed cat as a turtle</li>
-								</ul>
-							</aside>
-						</section>
-
-
-						<section data-background="lib/images/tanguy-sauvin-3121-unsplash.jpg">
-							<aside class="notes">
-								<ul>
-									<li>In fact, it's turtles all the way down</li>
-									<li>Important take away: map, flatmap</li>
-									<li>pet the cat - functor map</li>
-									<li>monad - flatten. turtles to cats</li>
-									<li>e.g. List[String] map each to List[Char]</li>
-									<li>Flatten. Box[Box[Thing]] to Box[Thing]</li>
-									<li>Flatmap combines map + flatten</li>
-								</ul>
-							</aside>
-						</section>
-
-
-						<section data-transition="convex-in concave-out">
-						<h2>The problem composing with a context</h2>		
-						<br>				
-						<pre class="scala"><code data-trim>
-							val getEmployeeFromDb: Id => IO[Employee]
-
-							val processEmployee: Employee => IO[Employee]
-
-							val updateEmployeeInDb: Employee => IO[Int]
-						</code></pre>
-
-                       	<aside class="notes">
-							<ul>
-								<li>Commonly functions inside context future, task IO</li>
-								<li>presents problem composing (as seen signature chain)</li>
-								<li>when start calling fns returning inside context</li>
-								<li>could change input to match signature</li>
-								<li>might result in set of small blocks less composable / interchangeable w/ othr blocks</li>
-								<li>might pollute signatures</li>
-							</ul>
-						</aside>
-						</section>	
-
-						<section data-transition="convex-in concave-out">
-						<h2>Solution 1 - flatMap</h2>		
-						<br>				
-						<pre class="scala"><code data-trim>
-							val comboFlatMap: Id => IO[Boolean] = id => 
-						    getEmployeeFromDb(id) flatMap { employee => 
-						        processEmployee(employee) flatMap { processed =>
-						            updateEmployeeInDb(processed)
-						        }
-						    }
-							
-						</code></pre>
-
-                        <aside class="notes">
-							<ul>
-								<li>flatmap reach inside IO context. handle on contents</li>
-								<li>apply xformation, to return another IO in chain</li>
-								<li>similar to first approach to composition</li>
-								<li>nesting calls</li>
-								<li>delaying evaluation</li>
-								<li>works, not easy to read</li>
-								<li>go one better using standard lib</li>
-							</ul>
-						</aside>
-						</section>	
-
-						<section data-transition="convex-in concave-out">
-						<h2>Solution 2 - For comprehension</h2>		
-						<br>				
-						<pre class="scala"><code data-trim>
-							val comboForComp: Unit => IO[Boolean] = id =>
-							    for {
-							        employee <- getEmployeeFromDb(id)
-							        processed <- processEmployee(employee)
-							        result <- updateEmployeeInDb(processed)
-							    } yield result
-						</code></pre>
-
-                        <aside class="notes">
-							<ul>
-								<li>syntactic sugar for hand cranked flatmap - common</li>
-								<li>opening line sets context</li>
-								<li>cleaner, relaint on wrapping eager composition in fn</li>
-								<li>nice to achieve what we did withy standard libraries</li>
-								<li>meet the Kleisli</li>
-							</ul>
-						</aside>
-						</section>	
-
-						<section data-transition="convex-in concave-out">
-						<h2>Solution 3 - The Kleisli</h2>		
-						<br>				
-						<pre class="scala"><code data-trim>
-							val fn: Int => IO[String] = ???
-							val fnK: Kleisli[IO, Int, String] = ???
-						</code></pre>
-
-                        <aside class="notes">
-                            <ul>
-                            	<li>Allows us to compose fns while ignoring context</li>
-                            	<li>fn signature -> when lift kleisli get:</li>
-                            </ul>
-                        </aside>
-						</section>	
-
-
-						<section data-transition="convex-in concave-out">
-						<h2>Lifting into a Kleisli</h2>		
-						<br>				
-						<pre class="scala"><code data-trim>
-							val getEmployeeFromDb: Id => IO[Employee] = ???
-
-							val getEmployeeFromDbK = Kleisli.apply(getEmployeeFromDb)
-
-							val getEmployeeFromDbK = Kleisli(getEmployeeFromDb)
-						</code></pre>
-
-                        <aside class="notes">
-                            <ul>
-                            	<li>To lift call apply</li>
-                            	<li>either explicit or sugared syntax for apply method</li>
-                            </ul>
-                        </aside>
-						</section>	
-
-
-						<section data-transition="convex-in concave-out">
-						<h2>Combining Kleisli</h2>		
-						<br>				
-						<pre class="scala"><code data-trim>
-							val getEmployeeFromDbK: Kleisli[IO, Id, Employee] = ???
-							val processEmployeeK: Kleisli[IO, Employee, Employee] = ???
-							val updateEmployeeInDbK: Klesili[IO, Employee, Int] = ???
-
-							val comboKleisli: Kleisli[IO, Id, Int] = 
-								getEmployeeFromDbK
-									andThen processEmployeeK
-										andThen updateEmployeeInDbK
-						</code></pre>
-
-                        <aside class="notes">
-                            
-                        </aside>
-						</section>	
-
-						<section data-transition="convex-in concave-out">
-						<h2>Combining and lifting Kleisli</h2>		
-						<br>				
-						<pre class="scala"><code data-trim>
-							val comboKleisli: Kleisli[IO, Id, Int] = 
-								Kleisli(getEmployeeFromDb)
-									andThenK processEmployee
-										andThenK updateEmployeeInDb
-						</code></pre>
-
-                        <aside class="notes">
-                            
-                        </aside>
-						</section>
-
-						<section data-transition="convex-in concave-out" data-background="lib/images/chase-clark-509084-unsplash.jpg">
-							<div class="headerBox">
-								<h2>I put on my robe<br>and wizard hat...</h2>		
-							</div>
-						</section>
-
-						<section data-transition="convex-in concave-out">
-							<pre class="scala"><code data-trim>
-							val comboKleisli: Kleisli[IO, Id, Int] = 
-								Kleisli(getEmployeeFromDb)
-									>=> Kleisli(processEmployee)
-										>=> Kleisli(updateEmployeeInDb)
-						</code></pre>
-						<br>
-						<pre class="scala"><code data-trim>
-							val comboKleisli: Kleisli[IO, Id, Int] = 
-								Kleisli(getEmployeeFromDb)
-									>==> processEmployee
-										>==> updateEmployeeInDb
-						</code></pre>
+        <section data-transition="convex-in concave-out" data-background="lib/images/blur-clock-clock-face-280361.jpg">
 
             <aside class="notes">
-                
+                <ul>
+                    <li>Building software hard - complex</li>
+                    <li>Like me, scala not first - baggage</li>
+                    <li>oo/fp diff scala play both</li>
+                    <li>illustrate watch - object, function king</li>
+                    <li>evaluate http frameworks, scalatra -> http4s</li>
+                    <li>map, filter magic</li>
+                    <li>recently looking at a more functional way of hanging together</li>
+                </ul>
             </aside>
-						</section>
+        </section>
 
 
-						<section data-transition="convex-in concave-out">
-						<h2>Extracting from a Kleisli</h2>		
-						<br>				
-						<pre class="scala"><code data-trim>
+        <section data-background="lib/images/background.jpg">
+            <section data-transition="none">
+                <h3>Outline</h3>
+                <object type="image/svg+xml" data="lib/svg/outline.svg">
+                    Your browser does not support SVG
+                </object>
+
+                <aside class="notes">
+                    <ul>
+                        <li>start with what fn + comp are</li>
+                        <li>then composing standard lib</li>
+                        <li>b4 pressing on to composing higher kinded types</li>
+                        <li>BASICS - STANDARD LIB - HIGHER KINDED TYPES</li>
+                    </ul>
+                </aside>
+
+            </section>
+        </section>
+
+
+        <section data-background="lib/images/background.jpg">
+
+            <section
+                    data-transition="convex-in concave-out"
+                    data-background="lib/images/books-bookshelf-encyclopedia-34592.jpg">
+
+                <div class="headerBox">
+                    <h2 class="stroke">Functions and composition</h2>
+                    <br>
+                    <h3 class="stroke">using the standard library</h3>
+                </div>
+                <aside class="notes">
+                    <ul>
+                        <li>Part 1</li>
+                    </ul>
+                </aside>
+
+            </section>
+
+
+            <section data-transition="convex-in concave-out">
+                <h2>What is a function?</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim>
+                        object Main extends App {
+
+                            def backwards(input: String): String = {
+                                input.reverse
+                            }
+
+                            println(backwards("fish"))
+                        }
+                    </code>
+                </pre>
+                <aside class="notes">
+                    <ul>
+                        <li>take back in time</li>
+                        <li>exp anything like mine, prob enc a def</li>
+                        <li>easy to recognise - arg, ret, imp</li>
+                        <li>looks like a fn, walks and talks like a fn</li>
+                        <li>problem - isn't a fn, is method.</li>
+                    </ul>
+                </aside>
+            </section>
+
+
+            <section data-transition="convex-in concave-out">
+                <h2>A method</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim data-noescape>
+                        object Main extends App {
+
+                            def backwards(input: String): String = {
+                                input.reverse
+                            }
+
+                            def getBackwards: String => String = {
+                                input => input.reverse
+                            }
+
+                            println(backwards("fish"))
+                            println(getBackwards("fish"))
+                        }
+                    </code>
+                </pre>
+                <aside class="notes">
+                    <ul>
+                        <li>So if not a fn. What is fn, method, difference</li>
+                        <li>illustrate with example</li>
+                        <li>both defs can be used in the same way</li>
+                    </ul>
+                </aside>
+            </section>
+
+
+            <section data-transition="convex-in concave-out">
+                <h2>Function vs Method</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim data-noescape>
+                        object Main extends App {
+
+                            def backwards(input: String): String = {
+                                input.reverse
+                            }
+
+                            def getBackwards: String => String = {
+                                input => input.reverse
+                            }
+
+                            <mark><s>val fn = backwards</s></mark>
+                            val fn2 = getBackwards
+                        }
+                    </code>
+                </pre>
+                <aside class="notes">
+                    <ul>
+                        <li>Problem - cant simply assign method to val</li>
+                        <li>just assigning wont work</li>
+                        <li>Can take the fn from method and store</li>
+                        <li>need to give compiler a little more info</li>
+                        <li></li>
+                    </ul>
+                </aside>
+            </section>
+
+
+            <section data-transition="convex-in concave-out">
+                <h2>Retrieving the function from a method</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim data-noescape>
+                        object Main extends App {
+
+                            def backwards(input: String): String = {
+                                input.reverse
+                            }
+
+                            <mark><s>val back = backwards</s></mark>
+                            val back2 = backwards _
+                            val back3: String => String = backwards
+
+                            println("back2: " + back2("reverse me"))
+                            println("back3: " + back3("reverse me"))
+                        }
+                    </code>
+                </pre>
+                <aside class="notes">
+                    <ul>
+                        <li>Applying using underscore or eplicit type</li>
+                        <li>Key take a away: difference</li>
+                        <li>Not the same thing</li>
+                    </ul>
+                </aside>
+            </section>
+
+
+            <section data-transition="convex-in concave-out">
+                <h2>A function value</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim data-noescape>
+                        object Main extends App {
+
+                            <mark>val</mark> backwards: String => String = input => {
+                                input.reverse
+                            }
+
+                            println(backwards("fish"))
+                        }
+                    </code>
+                </pre>
+                <aside class="notes">
+                    <ul>
+                        <li>Can store fn as val</li>
+                        <li>unlike def this is a function. syntactic sugar</li>
+                        <li>def create and return a fn and can be coerced to return an fn</li>
+                        <li>distinction</li>
+                        <li>eager evaluation vs every call</li>
+                    </ul>
+                </aside>
+            </section>
+
+
+            <section data-transition="convex-in concave-out">
+                <h2>A lazy function value</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim data-noescape>
+                        object Main extends App {
+
+                            <mark>lazy val</mark> backwards: String => String = input => {
+                                input.reverse
+                            }
+
+                            println(backwards("fish"))
+                        }
+                    </code>
+                </pre>
+                <aside class="notes">
+                    <ul>
+                        <li>evaluation on first call</li>
+                        <li>not called, never evaluate</li>
+                        <li>recap: def, val, lazy val</li>
+                        <li>look at what a fn is</li>
+                    </ul>
+                </aside>
+            </section>
+
+
+            <section data-transition="convex-in concave-out">
+                <h2>Function1[A, B]</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim data-noescape>
+                        object Main extends App {
+
+                            val backwards = new Function1[String, String] {
+                                override def apply(input: String) =
+                                    input.reverse
+                            }
+
+                            println(backwards("fish"))
+                        }
+                    </code>
+                </pre>
+                <aside class="notes">
+                    <ul>
+                        <li>a fn in scala is an object instantiated from a trait</li>
+                        <li>when assigned, we store the mem loc of the object in the val</li>
+                        <li>when we apply, we call the apply method on that object on the heap</li>
+                        <li>here we explicitly create a fn1 object from trait</li>
+                        <li>rather that using the syntactic sugar</li>
+                        <li>impact of returning a new fn every def call</li>
+                    </ul>
+                </aside>
+            </section>
+
+
+            <section data-transition="convex-in concave-out">
+                <h2>Function0[+R]</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim>
+                        object Main extends App {
+
+                            // () => String
+                            val backwards = new Function0[String] {
+                            override def apply() = "fish".reverse
+                          }
+
+                          println(backwards())
+                        }
+                    </code>
+                </pre>
+                <aside class="notes">
+                    <ul>
+                        <li>fn1 defines a fn with 1 input parameter</li>
+                        <li>not only trait: 23 -> 0 to 22</li>
+                        <li>fn0 as seen here is a 0 arg fn. empty brackets to something</li>
+                    </ul>
+                </aside>
+            </section>
+
+
+            <section data-transition="convex-in concave-out">
+                <h2>What is composition?</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim>
+                        val double: Int => Int = _ * 2	// (number => number * 2)
+
+                        val inc: Int => Int = _ + 1	// (number => number + 1)
+                    </code>
+                </pre>
+
+                <aside class="notes">
+                    <ul>
+                        <li>Seen syntactic sugar describing fn signatures</li>
+                        <li>Here r 2 fns - double, inc</li>
+                        <li>composition is a means to produce a combined effect</li>
+                    </ul>
+                </aside>
+
+            </section>
+
+            <section data-transition="convex-in concave-out">
+                <h2>Chaining application</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim>
+                        val double: Int => Int = _ * 2	// (number => number * 2)
+
+                        val inc: Int => Int = _ + 1	// (number => number + 1)
+                    </code>
+                </pre>
+
+                <br>
+                <pre class="scala">
+                    <code data-trim>
+                        val doubled = double(5)
+
+                        val incremented = inc(doubled)
+                    </code>
+                </pre>
+
+                <aside class="notes">
+                    <ul>
+                        <li>we can achieve most easy by chaining application</li>
+                        <li>apply double with 5</li>
+                        <li>feed output into second fn</li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section data-transition="convex-in concave-out">
+                <h2>Nesting (inline)</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim>
+                        val double: Int => Int = _ * 2	// (number => number * 2)
+
+                        val inc: Int => Int = _ + 1	// (number => number + 1)
+                    </code>
+                </pre>
+
+                <br>
+
+                <pre class="scala">
+                    <code data-trim>
+                        val result = inc(double(5))	// 11
+                    </code>
+                </pre>
+
+                <aside class="notes">
+                    <ul>
+                        <li>Also achieve via inlining vs storing intermediate result in val</li>
+                        <li>even more useful compose without applying</li>
+                        <li>reuse blocks of logic by composing them from other fns</li>
+                        <li>simple single fns or composed blocks themselves</li>
+                    </ul>
+                </aside>
+
+            </section>
+
+
+            <section data-transition="convex-in concave-out">
+                <h2>Compose without applying</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim>
+                        val doubleAndIncrement: Int => Int = number => {
+
+                                inc(double(number))
+
+                        }
+
+                    </code>
+                </pre>
+
+                <aside class="notes">
+                    <ul>
+                        <li>If wanted produce reusable can create a new fn</li>
+                        <li>delays execution</li>
+                        <li>feed into first, flow doesn't chain</li>
+                        <li>Syntax doesn't scale - inc depth of nesting</li>
+                        <li>Added diff - read chain right to left</li>
+                        <li>lets look at other options</li>
+                    </ul>
+                </aside>
+
+            </section>
+
+
+        </section>
+
+
+        <section data-background="lib/images/background.jpg">
+
+            <section data-transition="convex-in concave-out"
+                     data-background="lib/images/giammarco-boscaro-380903-unsplash.jpg">
+                <div class="headerBox">
+                    <h2>What else does the standard library provide?</h2>
+                </div>
+                <aside class="notes">
+                    <ul>
+                        <li>Part 2</li>
+                    </ul>
+                </aside>
+            </section>
+
+
+            <section data-transition="convex-in concave-out">
+                <h2>The `compose` function</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim>
+                        trait Function1[-T1, +R] {
+
+                            def compose[A](g: (A) => T1): (A) => R
+
+                        }
+                    </code>
+                </pre>
+
+                <br>
+                <h5>in use</h5>
+                <pre class="scala">
+                    <code data-trim>
+                        val doubleAndIncrement: Int => Int = inc.compose(double)
+
+                        val doubleAndIncrement: Int => Int = inc compose double
+
+                        val result = doubleAndIncrement(5) // 11
+                    </code>
+                </pre>
+
+                <aside class="notes">
+                    <ul>
+                        <li>provide fn as argument</li>
+                        <li>like dot notation in maths</li>
+                        <li>a dot b</li>
+                        <li>passed in doubled then incremented</li>
+                    </ul>
+                </aside>
+
+            </section>
+
+
+            <section data-transition="convex-in concave-out">
+                <h2>Reading right to left</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim>
+                        val doThing: Int => Int = inc compose
+
+                                        double compose
+
+                                            inc compose
+
+                                                triple
+                    </code>
+                </pre>
+
+                <aside class="notes">
+                    <ul>
+                        <li>improved readability by avoiding nested calls</li>
+                        <li>whitespace</li>
+                        <li>right to left reading problem</li>
+                        <li>can stop otherwise other method</li>
+                    </ul>
+                </aside>
+            </section>
+
+
+            <section data-transition="convex-in concave-out">
+                <h2>andThen</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim>
+                        trait Function1[-T1, +R] {
+
+                            def andThen[A](g: (R) => A): (T1) => A
+
+                        }
+                    </code>
+                </pre>
+                <br>
+                <h5>In use</h5>
+                <pre class="scala">
+                    <code data-trim>
+                        val incrementAndDouble: Int => Int = inc.andThen(double)
+
+                        val incrementAndDouble: Int => Int = inc andThen double
+
+                        val result = incrementAndDouble(5) // 12
+                    </code>
+                </pre>
+
+                <aside class="notes">
+                    <ul>
+                        <li>Called andThen</li>
+                        <li>works same as compose reversed</li>
+                        <li>example</li>
+                        <li>effect is switching reading order to left to right</li>
+                    </ul>
+                </aside>
+            </section>
+
+
+            <section data-transition="convex-in concave-out">
+                <h2>Reading left to right</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim>
+                        val doThing: Int => Int = inc andThen
+
+                                        double andThen
+
+                                            inc andThen
+
+                                                triple
+                    </code>
+                </pre>
+
+                <aside class="notes">
+                    <ul>
+                        <li>Personally prefer this style</li>
+                        <li>Maybe prefer one over the other</li>
+                        <li>Use whatever best for you</li>
+                    </ul>
+                </aside>
+            </section>
+
+
+            <section data-transition="convex-in concave-out" id="fragments">
+                <h2>The signature for chaining</h2>
+                <br>
+
+                <q>The output from the previous function must match the input to the next function in your chain</q>
+
+                <br>
+                <br>
+
+                <pre class="scala fragment">
+                    <code data-trim>
+                        val a: Config => DbResult
+                        val b: DbResult => BigInt
+                        val c: BigInt => BigInt
+                        val d: BigInt => Json
+
+                        val e: Config => Json = a andThen b andThen c andThen d
+                    </code>
+                </pre>
+
+                <
+                <aside class="notes">
+                    <ul>
+                        <li>Seen this one already - explicit</li>
+                        <li>if output string, next input</li>
+                        <li>--</li>
+                        <li>here have config to dbresult ...</li>
+                        <li>can do, can't do</li>
+                    </ul>
+                </aside>
+            </section>
+
+
+            <section data-transition="convex-in concave-out">
+                <h2>Can't compose, won't compose</h2>
+                <br>
+
+                <pre class="scala">
+                    <code data-trim data-noescape>
+                        val unitNum: Unit => Int = Unit => 5
+
+                        val double: Int => Int = _ * 2
+
+                        val result = unitNum andThen double //Function1[Unit, Int]
+
+                        <span class="fragment"
+                              data-fragment-index="1">// no Function1[(), Int] Function0[Int]</span>
+                        val laterNum = () => 5
+                        <br>
+                        <span class="fragment" data-fragment-index="1"><mark><s>val other = laterNum andThen double</s></mark></span>
+
+
+                    </code>
+                </pre>
+
+                <aside class="notes">
+                    <ul>
+                        <li>To wrap up highlight a gotcha</li>
+                        <li>result is perfectly fine - signature explanation</li>
+                        <li>--</li>
+                        <li>laternum won't work - empty brackets -> no args</li>
+                        <li>of all 23 fn traits, only fn1 has compose andThen</li>
+                        <li>brings to end of standard lib</li>
+                    </ul>
+                </aside>
+
+            </section>
+
+
+        </section>
+
+        <section data-background="lib/images/background.jpg">
+
+            <section
+                    data-transition="convex-in concave-out"
+                    data-background="lib/images/alvaro-reyes-500044-unsplash.jpg">
+                <div class="headerBox">
+                    <h2>Composing</h2>
+                    <br>
+                    <h3>with higher kinded types</h3>
+                </div>
+                <aside class="notes">
+                    <ul>
+                        <li>Part 3 - Higher Kinded Types</li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section data-background="lib/images/george-bonev-296136-unsplash.jpg">
+                <aside class="notes">
+                    <ul>
+                        <li>Monads</li>
+                        <li>I understand that there's a tradition of blowing up twitter for every analogy</li>
+                        <li>context/box wraps type</li>
+                        <li>e.g. variable</li>
+                        <li>box takes a type -> fancy say generic</li>
+                        <li>The box provides context, LIST / OPTION</li>
+                        <li>Monad can take more than one type, or types in other boxes</li>
+                        <li>HP/amazon</li>
+                        <li>think of a boxed cat as a turtle</li>
+                    </ul>
+                </aside>
+            </section>
+
+
+            <section data-background="lib/images/tanguy-sauvin-3121-unsplash.jpg">
+                <aside class="notes">
+                    <ul>
+                        <li>In fact, it's turtles all the way down</li>
+                        <li>Important take away: map, flatmap</li>
+                        <li>pet the cat - functor map</li>
+                        <li>monad - flatten. turtles to cats</li>
+                        <li>e.g. List[String] map each to List[Char]</li>
+                        <li>Flatten. Box[Box[Thing]] to Box[Thing]</li>
+                        <li>Flatmap combines map + flatten</li>
+                    </ul>
+                </aside>
+            </section>
+
+
+            <section data-transition="convex-in concave-out">
+                <h2>The problem composing with a context</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim>
+                        val getEmployeeFromDb: Id => IO[Employee]
+
+                        val processEmployee: Employee => IO[Employee]
+
+                        val updateEmployeeInDb: Employee => IO[Int]
+                    </code>
+                </pre>
+
+                <aside class="notes">
+                    <ul>
+                        <li>Commonly functions inside context future, task IO</li>
+                        <li>presents problem composing (as seen signature chain)</li>
+                        <li>when start calling fns returning inside context</li>
+                        <li>could change input to match signature</li>
+                        <li>might result in set of small blocks less composable / interchangeable w/ othr blocks</li>
+                        <li>might pollute signatures</li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section data-transition="convex-in concave-out">
+                <h2>Solution 1 - flatMap</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim>
+                        val comboFlatMap: Id => IO[Boolean] = id =>
+                        getEmployeeFromDb(id) flatMap { employee =>
+                            processEmployee(employee) flatMap { processed =>
+                                updateEmployeeInDb(processed)
+                            }
+                        }
+                    </code>
+                </pre>
+
+                <aside class="notes">
+                    <ul>
+                        <li>flatmap reach inside IO context. handle on contents</li>
+                        <li>apply xformation, to return another IO in chain</li>
+                        <li>similar to first approach to composition</li>
+                        <li>nesting calls</li>
+                        <li>delaying evaluation</li>
+                        <li>works, not easy to read</li>
+                        <li>go one better using standard lib</li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section data-transition="convex-in concave-out">
+                <h2>Solution 2 - For comprehension</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim>
+                        val comboForComp: Unit => IO[Boolean] = id =>
+                            for {
+                                employee <- getEmployeeFromDb(id)
+                                processed <- processEmployee(employee)
+                                result <- updateEmployeeInDb(processed)
+                            } yield result
+                    </code>
+                </pre>
+
+                <aside class="notes">
+                    <ul>
+                        <li>syntactic sugar for hand cranked flatmap - common</li>
+                        <li>opening line sets context</li>
+                        <li>cleaner, relaint on wrapping eager composition in fn</li>
+                        <li>nice to achieve what we did withy standard libraries</li>
+                        <li>meet the Kleisli</li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section data-transition="convex-in concave-out">
+                <h2>Solution 3 - The Kleisli</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim>
+                        val fn: Int => IO[String] = ???
+                        val fnK: Kleisli[IO, Int, String] = ???
+                    </code>
+                </pre>
+
+                <aside class="notes">
+                    <ul>
+                        <li>Allows us to compose fns while ignoring context</li>
+                        <li>fn signature -> when lift kleisli get:</li>
+                    </ul>
+                </aside>
+            </section>
+
+
+            <section data-transition="convex-in concave-out">
+                <h2>Lifting into a Kleisli</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim>
+                        val getEmployeeFromDb: Id => IO[Employee] = ???
+
+                        val getEmployeeFromDbK = Kleisli.apply(getEmployeeFromDb)
+
+                        val getEmployeeFromDbK = Kleisli(getEmployeeFromDb)
+                    </code>
+                </pre>
+
+                <aside class="notes">
+                    <ul>
+                        <li>To lift call apply</li>
+                        <li>either explicit or sugared syntax for apply method</li>
+                    </ul>
+                </aside>
+            </section>
+
+
+            <section data-transition="convex-in concave-out">
+                <h2>Combining Kleisli</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim>
+                        val getEmployeeFromDbK: Kleisli[IO, Id, Employee] = ???
+                        val processEmployeeK: Kleisli[IO, Employee, Employee] = ???
+                        val updateEmployeeInDbK: Klesili[IO, Employee, Int] = ???
+
+                        val comboKleisli: Kleisli[IO, Id, Int] =
+                            getEmployeeFromDbK
+                                andThen processEmployeeK
+                                    andThen updateEmployeeInDbK
+                    </code>
+                </pre>
+
+                <aside class="notes">
+                    <ul>
+                        <li>Back to when we used stand lib to compose</li>
+                        <li>A little more syntactic sugar to make this more convenient</li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section data-transition="convex-in concave-out">
+                <h2>Combining and lifting Kleisli</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim>
+                        val comboKleisli: Kleisli[IO, Id, Int] =
+                            Kleisli(getEmployeeFromDb)
+                                andThenK processEmployee
+                                    andThenK updateEmployeeInDb
+                    </code>
+                </pre>
+
+                <aside class="notes">
+                    <ul>
+                        <li>previously lifted all fns into Kleisli</li>
+                        <li>inline - scalaz vs cats</li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section data-transition="convex-in concave-out"
+                     data-background="lib/images/chase-clark-509084-unsplash.jpg">
+                <div class="headerBox">
+                    <h2>I put on my robe<br>and wizard hat...</h2>
+                </div>
+                <aside class="notes">
+                    <ul>
+                        <li>Being a wizard is great.</li>
+                        <li>cool clothes</li>
+                        <li>wave a staff</li>
+                        <li>read arcane symbols</li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section data-transition="convex-in concave-out">
+							<pre class="scala">
+                    <code data-trim>
+                        val comboKleisli: Kleisli[IO, Id, Int] =
+                            Kleisli(getEmployeeFromDb)
+                                >=> Kleisli(processEmployee)
+                                    >=> Kleisli(updateEmployeeInDb)
+                    </code>
+                </pre>
+                <br>
+                <pre class="scala">
+                    <code data-trim>
+                        val comboKleisli: Kleisli[IO, Id, Int] =
+                            Kleisli(getEmployeeFromDb)
+                                >==> processEmployee
+                                    >==> updateEmployeeInDb
+                    </code>
+                </pre>
+
+                <aside class="notes">
+                    <ul>
+                        <li>Scalaz has some arcane symbols</li>
+                        <li>little fish - drop in replacement for andThen</li>
+                        <li>big fish - drop in for andThenK</li>
+                        <li>symbol direction</li>
+                        <li>cats no symbols</li>
+                    </ul>
+                </aside>
+            </section>
+
+
+            <section data-transition="convex-in concave-out">
+                <h2>Extracting from a Kleisli</h2>
+                <br>
+                <pre class="scala">
+                    <code data-trim>
 							comboFn: Id => IO[Int] = 
 								(Kleisli(getEmployeeFromDb)
 									andThenK processEmployeeK
 										andThenK updateEmployeeInDbK).run
-						</code></pre>
+                    </code>
+                </pre>
 
-                        <aside class="notes">
-                            
-                        </aside>
-						</section>	
+                <aside class="notes">
+                    <ul>
+                        <li>dot run. that's it</li>
+                        <li>don't need to -> apply kleisli pass-through</li>
+                    </ul>
+                </aside>
+            </section>
 
-				</section>
+        </section>
 
-				<section data-background="lib/images/background.jpg">
-						<section data-transition="convex-in concave-out"
-						data-background="lib/images/gabriel-lamza-785336-unsplash.jpg">
-						<div class="headerBox">
-							<h2>Benefits</h2>
-							<br>
-							<h3>and how can I get them?</h3>
-						</div>
-							<aside class="notes">
-								
-							</aside>
-						</section>
+        <section data-background="lib/images/background.jpg">
+            <section data-transition="convex-in concave-out"
+                     data-background="lib/images/gabriel-lamza-785336-unsplash.jpg">
+                <div class="headerBox">
+                    <h2>Benefits</h2>
+                    <br>
+                    <h3>and how can I get them?</h3>
+                </div>
+            </section>
 
-						<section data-transition="convex-in concave-out">
-							<div>
-								<h2>Readability</h2>
-								<h3>From</h3>
-								<pre class="scala"><code data-trim>
-									handler = 
-									TimecodeUpdateHandler
-									.createHandler(TimecodesDao, notificationPublisher)
-								</code></pre>
+            <section data-transition="convex-in concave-out">
+                <div>
+                    <h2>Readability</h2>
+                    <h3>From</h3>
+                    <pre class="scala">
+                        <code data-trim>
+                            handler =
+                            TimecodeUpdateHandler
+                            .createHandler(TimecodesDao, notificationPublisher)
+                        </code>
+                </pre>
 
-								<h3>To</h3>
-								<pre class="scala"><code data-trim>
-									transcodedTimecodeHandler =
-									TranscodedTimecodeHandler.splitProgrammeParts andThen
-									TranscodedTimecodeHandler.calculateTimecodeData andThen
-									TimecodesDao.upsert(xa) andThen
-									TimecodeHandler.handleNotifications(notificationPublisher) andThen
-									TimecodeHandler.handleFailure
-								</code></pre>
-								
-							</div>
-							<aside class="notes">
-								
-							</aside>
-						</section>
+                    <h3>To</h3>
+                    <pre class="scala">
+                    <code data-trim>
+                        transcodedTimecodeHandler =
+                        TranscodedTimecodeHandler.splitProgrammeParts andThen
+                        TranscodedTimecodeHandler.calculateTimecodeData andThen
+                        TimecodesDao.upsert(xa) andThen
+                        TimecodeHandler.handleNotifications(notificationPublisher) andThen
+                        TimecodeHandler.handleFailure
+                    </code>
+                </pre>
 
-
-						<section data-transition="convex-in concave-out">
-							<div>
-								<h2>Reusability</h2>
-								<pre class="scala"><code data-trim data-noescape>
-									transcodedTimecodeHandler =
-									<mark>TranscodedTimecodeHandler</mark>.splitProgrammeParts andThen
-									<mark>TranscodedTimecodeHandler</mark>.calculateTimecodeData andThen
-									TimecodesDao.upsert(xa) andThen
-									<mark>TimecodeHandler</mark>.handleNotifications(notificationPublisher) andThen
-									<mark>TimecodeHandler</mark>.handleFailure
-								</code></pre>
-								
-							</div>
-							<aside class="notes">
-								
-							</aside>
-						</section>
-
-						<section data-transition="convex-in concave-out">
-							<div>
-								<h2>Robustness (Testing)</h2>
-								<h4>Stubbing</h4>
-								<pre class="scala"><code data-trim>
-									val getFilesForProduction: Production => IO[List[File]] =
-										_ => IO.pure(files)
-
-									val statusPublisher: StatusMessage => IO[Unit] =
-										_ => IO.raiseError(new Exception("oh noes!"))
-
-								</code></pre>
-
-								<br>
-								<h4>Mocking</h4>
-								<pre class="scala"><code data-trim>	
-
-									val publishedMessage: Promise[TimecodeMessage] = Promise()
-
-									val timecodePublisher: TimecodeMessage => IO[Unit] =
-										message => IO(publishedMessage.success(message))
-
-								</code></pre>
-								
-							</div>
-							<aside class="notes">
-								
-							</aside>
-						</section>
+                </div>
+                <aside class="notes">
+                    <ul>
+                        <li>advantage - small to large</li>
+                        <li>top - objects passed in, construction responsibility</li>
+                        <li>like about the composed version is story it tells</li>
+                        <li>Can do in oo clean coding, not as clean, nesting. class encapsulation</li>
+                        <li>Don't like exposed construction, encapsulate in a fn and hide it elsewhere</li>
+                    </ul>
+                </aside>
+            </section>
 
 
-						<section data-transition="convex-in concave-out">
-							<div>
-								<h2>Downsides</h2>
-								
-								Are there any?
-								
-							</div>
-							<aside class="notes">
-								
-							</aside>
-						</section>
+            <section data-transition="convex-in concave-out">
+                <div>
+                    <h2>Reusability</h2>
+                    <pre class="scala">
+                        <code data-trim data-noescape>
+                            transcodedTimecodeHandler =
+                            <mark>TranscodedTimecodeHandler</mark>.splitProgrammeParts andThen
+                            <mark>TranscodedTimecodeHandler</mark>.calculateTimecodeData andThen
+                            TimecodesDao.upsert(xa) andThen
+                            <mark>TimecodeHandler</mark>.handleNotifications(notificationPublisher) andThen
+                            <mark>TimecodeHandler</mark>.handleFailure
+                        </code>
+                </pre>
+
+                </div>
+                <aside class="notes">
+                    <ul>
+                        <li>exposed construction, constant reminder of blocks for reuse</li>
+                        <li>reusability key part of all software design, DRY well known</li>
+                        <li>perhaps this approach provides a clearer description of the program</li>
+                        <li>FP -> separationn of the description of a program vs the execution of it</li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section data-transition="convex-in concave-out">
+                <div>
+                    <h2>Robustness (Testing)</h2>
+                    <h4>Stubbing</h4>
+                    <pre class="scala">
+                        <code data-trim>
+                            val getFilesForProduction: Production => IO[List[File]] =
+                                _ => IO.pure(files)
+
+                            val statusPublisher: StatusMessage => IO[Unit] =
+                                _ => IO.raiseError(new Exception("oh noes!"))
+
+                        </code>
+                    </pre>
+
+                    <br>
+                    <h4>Mocking</h4>
+                    <pre class="scala">
+                    <code data-trim>
+
+                        val publishedMessage: Promise[TimecodeMessage] = Promise()
+
+                        val timecodePublisher: TimecodeMessage => IO[Unit] =
+                            message => IO(publishedMessage.success(message))
+
+                    </code>
+                </pre>
+
+                </div>
+                <aside class="notes">
+                    <ul>
+                        <li>Had to massage R a little, one of best advantages to functional composition</li>
+                        <li>Not a fan of mockito. Code smell. Java class ok</li>
+                        <li>Imageine a world where u didn't have 2 do that</li>
+                        <li>Stub response - ignore input, return</li>
+                        <li>test failure response - blow up</li>
+                        <li>verify interaction, use promise / ref</li>
+                    </ul>
+                </aside>
+            </section>
 
 
-				</section>
+            <section data-transition="convex-in concave-out">
+                <div>
+                    <h2>Downsides</h2>
+
+                    Are there any?
+
+                </div>
+                <aside class="notes">
+                    <ul>
+                        <li>As mentioned 3 positives</li>
+                        <li>only fair to suggest a couple of potential downsides</li>
+                    </ul>
+                </aside>
+            </section>
 
 
-				<!-- SUMMARY -->
+            <section data-transition="convex-in concave-out">
+                <div>
+                    <h2>What next?</h2>
 
-				<section data-background="lib/images/background.jpg">
+                    Where do we go from here?
 
-						<section 
-							data-background="lib/images/blake-cheek-975905-unsplash.jpg"
-							data-transition="convex-in concave-out">
-							<div class="headerBox">
-								<h2>We all float down here</h2>								
-							</div>
-							<aside class="notes">
-								<ul>
-									<li>Why use functional composition?</li><br>
-									<li>Testing</li><br>
-								</ul>
-							</aside>
-						</section>
-
-						<section>
-							<h2>Thanks Pixabay</h2>
-							<strong>Clock face</strong> photo by Thomas Breher<br>
-							<strong>Books</strong> photo by Unknown<br>
-						</section>
-
-						<section>
-							<h2>Thanks Unsplash</h2>
-							<strong>Fish</strong> Photo by David Clode<br>
-							<strong>Blue Lego</strong> Photo by Iker Urteaga<br>
-							<strong>Cat in a box</strong> photo by George Bonev<br>
-							<strong>Turtle</strong> Photo by Tanguy Sauvin<br>
-							<strong>Bookshelf with ladder</strong> Photo by Giammarco Boscaro<br>
-							<strong>Wizard</strong> Photo by David Clode<br>
-							<strong>Pair programming</strong> Photo by Alvaro Reyes<br>
-							<strong>Cloud</strong> Photo by Gabriel Lamza<br>
-							<strong>Balloon</strong> Photo by Blake Cheek<br>
-						</section>
-
-						<section>
-							<br>
-							<br>
-							<strong>This presentation will be soon available on the Scala eXchange London website at the following link:</strong>
-							<br><br>https://skillsmatter.com/conferences/10488-scala-exchange-2018#skillscasts
-<br><br>
-							<br><br><strong>A tutorial video is available on <i class="fab fa-youtube"></i> YouTube</strong>
-							<br><br>https://www.youtube.com/watch?v=qL6Viix3npA
-
-						</section>
-
-						<section>
-							<h3>Slides?</h3>
-							<i class="fab fa-github"></i> https://github.com/aworton
-							<br><br>
-							<h3>Follow?</h3>
-							<i class="fab fa-twitter"></i> @ajsworton
-							<br><i class="fab fa-linkedin"></i> alexander-worton
-
-						</section>
-
-				</section>
+                </div>
+                <aside class="notes">
+                    <ul>
+                        <li>Have to _do_ practise, try.</li>
+                        <li>playing with these concepts, trying them out and discovering what works for you</li>
+                        <li>For the team I'm on, Typeclasses - better separation of data and functionality</li>
+                    </ul>
+                </aside>
+            </section>
 
 
-			</div>
-		</div>
+        </section>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
 
-		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
-			Reveal.initialize({
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
-			});
-		</script>
-	</body>
+        <!-- SUMMARY -->
+
+        <section data-background="lib/images/background.jpg">
+
+            <section
+                    data-background="lib/images/blake-cheek-975905-unsplash.jpg"
+                    data-transition="convex-in concave-out">
+                <div class="headerBox">
+                    <h2>We all float down here</h2>
+                </div>
+                <aside class="notes">
+                    <ul>
+                        <li>Why use functional composition?</li>
+                        <br>
+                        <li>Testing</li>
+                        <br>
+                    </ul>
+                </aside>
+            </section>
+
+            <section>
+                <h2>Thanks Pixabay</h2>
+                <strong>Clock face</strong> photo by Thomas Breher<br>
+                <strong>Books</strong> photo by Unknown<br>
+            </section>
+
+            <section>
+                <h2>Thanks Unsplash</h2>
+                <strong>Fish</strong> Photo by David Clode<br>
+                <strong>Blue Lego</strong> Photo by Iker Urteaga<br>
+                <strong>Cat in a box</strong> photo by George Bonev<br>
+                <strong>Turtle</strong> Photo by Tanguy Sauvin<br>
+                <strong>Bookshelf with ladder</strong> Photo by Giammarco Boscaro<br>
+                <strong>Wizard</strong> Photo by David Clode<br>
+                <strong>Pair programming</strong> Photo by Alvaro Reyes<br>
+                <strong>Cloud</strong> Photo by Gabriel Lamza<br>
+                <strong>Balloon</strong> Photo by Blake Cheek<br>
+            </section>
+
+            <section>
+                <br>
+                <br>
+                <strong>This presentation will be soon available on the Scala eXchange London website at the following
+                    link:</strong>
+                <br><br>https://skillsmatter.com/conferences/10488-scala-exchange-2018#skillscasts
+                <br><br>
+                <br><br><strong>A tutorial video is available on <i class="fab fa-youtube"></i> YouTube</strong>
+                <br><br>https://www.youtube.com/watch?v=qL6Viix3npA
+
+            </section>
+
+            <section>
+                <h3>Slides?</h3>
+                <i class="fab fa-github"></i> https://github.com/aworton
+                <br><br>
+                <h3>Follow?</h3>
+                <i class="fab fa-twitter"></i> @ajsworton
+                <br><i class="fab fa-linkedin"></i> alexander-worton
+
+            </section>
+
+        </section>
+
+
+    </div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+        dependencies: [
+            {src: 'plugin/markdown/marked.js'},
+            {src: 'plugin/markdown/markdown.js'},
+            {src: 'plugin/notes/notes.js', async: true},
+            {
+                src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+                    hljs.initHighlightingOnLoad();
+                }
+            }
+        ]
+    });
+</script>
+</body>
 </html>

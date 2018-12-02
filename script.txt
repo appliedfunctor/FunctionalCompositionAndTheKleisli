@@ -294,13 +294,12 @@ So previously we'd lifted all of our functions into Kleisli in order to compose 
 
 ----------------------------------------------------------------------------------------
 Being a wizard is great, you get to wear cool clothes, wave a staff about and read arcane symbols.
-
 ----------------------------------------------------------------------------------------
 ScalaZ has some arcane symbols. Here we have the little fish. And this operator is a drop in replacement for the combination methods we've seen.
 
 The fish swims in the direction that you would read that combination, so this is an andThen. If the fish pointed or swam to the left it would be the same as compose.
 
-Below we have the big bish. This is the andThenK or composeK, and the direction tells us which it is.
+Below we have the big fish. This is the andThenK or composeK, and the direction tells us which it is.
 
 Some people like these sort of symbols, and I have a soft spot for them, but at the same time, you need to recognise that trying to google something like this is a little tricky and there's no helper as to what they do from the naming. You have to know what it is first.
 
@@ -308,7 +307,7 @@ If you use Cats, then there's no choice to be made, it doesn't have these symbol
 
 So now we've seen the big fish, little fish and cardboard box, it's time to retrieve our function back from the Kleisli.
 ----------------------------------------------------------------------------------------
-dot run. that;s it. So if you want to retrieve the function back, calling the run method will return you your extracted function. At the same time you don't need to do it because the apply method on your constructed Kleisli will pass through the arguments you provide it into the encapsulated function. So you don't need to extract the function out to run it, but if you need to pull it out to pass it in to something that's requiring a different signature then dot run's how you do it.
+dot run. that's it. So if you want to retrieve the function back, calling the run method will return you your extracted function. At the same time you don't need to do it because the apply method on your constructed Kleisli will pass through the arguments you provide it into the encapsulated function. So you don't need to extract the function out to run it, but if you need to pull it out to pass it in to something that's requiring a different signature then dot run's how you do it.
 ----------------------------------------------------------------------------------------
 Part 4 - What was the point?
 
@@ -316,7 +315,7 @@ Readability
 
 As you can see, an advantage of Functional composition is this ability to go from a very small, concise piece of code, to a much larger, very verbose piece.
 
-Noe, the top shows a couple of objects being passed in to a method which has responsibility for constructing the handler. Traditionally, a lot of the functionality shown in the second example occurs within the createHandler method and may or may not be hidden away behind access modifiers.
+Now, the top shows a couple of objects being passed in to a method which has responsibility for constructing the handler. Traditionally, a lot of the functionality shown in the second example occurs within the createHandler method and may or may not be hidden away behind access modifiers.
 
 What I like about the composed version is the story that it tells.
 

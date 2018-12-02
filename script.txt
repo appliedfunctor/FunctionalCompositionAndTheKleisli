@@ -57,7 +57,7 @@ Previously, we saw that a def could create a function, and be coerced to return 
 
 There is an important distinction.
 
-A val is eagerly evaluated, that is the value is evaluated and assigned when the val is declared, however this occurs once.
+A val is eagerly evaluated, that is the value on the right hand side  is evaluated and assigned when the val is declared, however this occurs once.
 
 A def is evaluated every time it is called.
 ----------------------------------------------------------------------------------------
@@ -65,12 +65,12 @@ A lazy val is like a regular val, but it isn't evaluated when it's declared, it'
 
 So if we don't call it, it never gets evaluated
 
-If we call or use it three times, the right hand side is evaluated once, on the first use.
+If we call or use it three times, then the right hand side is evaluated once, on the first call.
 
 So now we know that
     - a def is evaluated every time you call it, just like a function
     - a val is evaluated once, when declared
-    - a lazy val is evaluated once, the first time it is used.
+    - and a lazy val is evaluated once, the first time it is used.
 
 Let's look at what a function is.
 ----------------------------------------------------------------------------------------
@@ -86,8 +86,7 @@ In fact, String => String is syntactic sugar for this object.
 
 This is important when thinking about how a def is evaluated on every call. If you return a function from a def, you are creating a new function object every time it's called.
 ----------------------------------------------------------------------------------------
-The function1 defines a function with 1 input parameter, but it is not the only function
-trait. 
+The function1 defines a function with 1 input parameter, but it is not the only function trait.
 
 There are as many function traits as there are tuples, 23 of them from 0 to 22.
 
@@ -117,9 +116,11 @@ then it feeds into the first and executes down the chain until it returns the ou
 
 However the syntax here doesn't scale very well, it becomes harder to read as you increase the depth of nesting.
 
-And you have the added difficulty of attempting to read the chain from right to the left.
+Plus you have the added difficulty of attempting to read the chain from right to the left.
 
-Let's look at what other options there are.
+Let's take a  look at what other options there are.
+----------------------------------------------------------------------------------------
+Part 2 composing with the standard library
 ----------------------------------------------------------------------------------------
 So we have the compose function.
 
@@ -143,7 +144,7 @@ so if we use it to compose inc and double, it will apply inc first, followed by 
 
 which has the effect of switching the reading order of the composed functions from right to left to left to right.
 ----------------------------------------------------------------------------------------
-I personally prefer this style, I find it easier to read and reason about, but as we've seen, you have the choice. So use whatever works best for you.
+Now, I personally prefer this style, I find it easier to read and reason about, but as we've seen, you have the choice. So use whatever works best for you.
 ----------------------------------------------------------------------------------------
 We've seen this already, but I just want to be explicit and clear that in order to compose functions, the signatures must match.
 
@@ -151,9 +152,9 @@ If your output from one function is a String, then the next function in the chai
 
 -slide-
 
-here we have a config to db result ......
+here we have a config to db result, a db result to bigInt, a bigInt to BigInt and then a BigInt to Json.
 
-and because each signature in the chain matches up, we can produce a composed function of a andThen b andthen c andthen d, however we couldn't do a compose b compose c compose d, because that's the same as d andThenc andThen b andThen a.
+and because each signature in the chain matches up, as in the output of macthes the input to b etc, we can produce a composed function of a andThen b andthen c andthen d, however we couldn't do a compose b compose c compose d, because that's the same as d andThen  c andThen b andThen a.
 ----------------------------------------------------------------------------------------
 before we wrap up this section, I'd like to highlight a gotcha .
 
@@ -177,7 +178,7 @@ Now, this brings us to the end of what we're going to look at with the standard 
 ----------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------
 Part 3 - Higher Kinded Types
-
+----------------------------------------------------------------------------------------
 Now of course, when you see a picture like this you know we're going to talk about Monads.
 
 Don't worry, we opened the lid, the cat's fine.
@@ -283,7 +284,7 @@ comboKleisli: Kleisli[Task, Id, Int] = getEmployeeFromDbKleisli
 
 Now we are back to when we used the standard library for combining functions using methods defined on the Function1 trait, only now, we're doing so while the outputs are wrapped inside of whatever context we're using.
 
-There is still a little syntactic sugar to make this even more convenient.
+There is still a little syntactic sugar to make this even more convenient though.
 ----------------------------------------------------------------------------------------
 comboKleisli: Kleisli[Task, Id, Int] = Kleisli(getEmployeeFromDb) 
                                             andThenK processEmployeeKleisli 
@@ -338,7 +339,7 @@ I had to massage this a little to get a word starting with R, but this is one of
 
 I love the testing. Mainly because I dislike working with mockito, deep mocking and generally having these huge object dependencies thrown around. To the point where I view it as a code smell. Now, I know that many people really like mockito, and it is a fantastic library and when you need to mock a huge Java class, then it's much better than the alternative.
 
-But imagine a world where you didn't need to do that. And that's the world that I like to pretend I live in. And this is what you get. You want to stub a list of files for a function? Go ahead, ignore the input and just return whatever you need.
+But imagine a world where you didn't need to do that. And that's the world that I like to pretend I live in. And this is what you get. You want to stub a list of  files for a function? Go ahead, ignore the input and just return whatever you need.
 
 How about testing failure response? No problem, just blow it up.
 

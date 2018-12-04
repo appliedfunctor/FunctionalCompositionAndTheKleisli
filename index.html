@@ -113,8 +113,7 @@
             <section data-transition="convex-in concave-out">
                 <h2>What is a function?</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
                         object Main extends App {
 
                             def backwards(input: String): String = {
@@ -123,8 +122,7 @@
 
                             println(backwards("fish"))
                         }
-                    </code>
-                </pre>
+                </code></pre>
                 <aside class="notes">
                     <ul>
                         <li>take back in time</li>
@@ -140,8 +138,7 @@
             <section data-transition="convex-in concave-out">
                 <h2>A method</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim data-noescape>
+                <pre class="scala"><code data-trim data-noescape>
                         object Main extends App {
 
                             def backwards(input: String): String = {
@@ -155,8 +152,7 @@
                             println(backwards("fish"))
                             println(getBackwards("fish"))
                         }
-                    </code>
-                </pre>
+                </code></pre>
                 <aside class="notes">
                     <ul>
                         <li>So if not a fn. What is fn, method, difference</li>
@@ -170,8 +166,7 @@
             <section data-transition="convex-in concave-out">
                 <h2>Function vs Method</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim data-noescape>
+                <pre class="scala"><code data-trim data-noescape>
                         object Main extends App {
 
                             def backwards(input: String): String = {
@@ -185,8 +180,7 @@
                             <mark><s>val fn = backwards</s></mark>
                             val fn2 = getBackwards
                         }
-                    </code>
-                </pre>
+                </code></pre>
                 <aside class="notes">
                     <ul>
                         <li>Problem - cant simply assign method to val</li>
@@ -202,8 +196,7 @@
             <section data-transition="convex-in concave-out">
                 <h2>Retrieving the function from a method</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim data-noescape>
+                <pre class="scala"><code data-trim data-noescape>
                         object Main extends App {
 
                             def backwards(input: String): String = {
@@ -217,8 +210,7 @@
                             println("back2: " + back2("reverse me"))
                             println("back3: " + back3("reverse me"))
                         }
-                    </code>
-                </pre>
+                </code></pre>
                 <aside class="notes">
                     <ul>
                         <li>Applying using underscore or eplicit type</li>
@@ -232,8 +224,7 @@
             <section data-transition="convex-in concave-out">
                 <h2>A function value</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim data-noescape>
+                <pre class="scala"><code data-trim data-noescape>
                         object Main extends App {
 
                             <mark>val</mark> backwards: String => String = input => {
@@ -242,8 +233,7 @@
 
                             println(backwards("fish"))
                         }
-                    </code>
-                </pre>
+                </code></pre>
                 <aside class="notes">
                     <ul>
                         <li>Can store fn as val</li>
@@ -259,8 +249,7 @@
             <section data-transition="convex-in concave-out">
                 <h2>A lazy function value</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim data-noescape>
+                <pre class="scala"><code data-trim data-noescape>
                         object Main extends App {
 
                             <mark>lazy val</mark> backwards: String => String = input => {
@@ -269,8 +258,7 @@
 
                             println(backwards("fish"))
                         }
-                    </code>
-                </pre>
+                </code></pre>
                 <aside class="notes">
                     <ul>
                         <li>evaluation on first call</li>
@@ -285,8 +273,7 @@
             <section data-transition="convex-in concave-out">
                 <h2>Function1[A, B]</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim data-noescape>
+                <pre class="scala"><code data-trim data-noescape>
                         object Main extends App {
 
                             val backwards = new Function1[String, String] {
@@ -296,8 +283,7 @@
 
                             println(backwards("fish"))
                         }
-                    </code>
-                </pre>
+                </code></pre>
                 <aside class="notes">
                     <ul>
                         <li>a fn in scala is an object instantiated from a trait</li>
@@ -314,8 +300,7 @@
             <section data-transition="convex-in concave-out">
                 <h2>Function0[+R]</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
                         object Main extends App {
 
                             // () => String
@@ -325,8 +310,7 @@
 
                           println(backwards())
                         }
-                    </code>
-                </pre>
+                </code></pre>
                 <aside class="notes">
                     <ul>
                         <li>fn1 defines a fn with 1 input parameter</li>
@@ -340,13 +324,11 @@
             <section data-transition="convex-in concave-out">
                 <h2>What is composition?</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
                         val double: Int => Int = _ * 2	// (number => number * 2)
 
                         val inc: Int => Int = _ + 1	// (number => number + 1)
-                    </code>
-                </pre>
+                </code></pre>
 
                 <aside class="notes">
                     <ul>
@@ -361,22 +343,18 @@
             <section data-transition="convex-in concave-out">
                 <h2>Chaining application</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
                         val double: Int => Int = _ * 2	// (number => number * 2)
 
                         val inc: Int => Int = _ + 1	// (number => number + 1)
-                    </code>
-                </pre>
+                </code></pre>
 
                 <br>
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
                         val doubled = double(5)
 
                         val incremented = inc(doubled)
-                    </code>
-                </pre>
+                </code></pre>
 
                 <aside class="notes">
                     <ul>
@@ -390,21 +368,17 @@
             <section data-transition="convex-in concave-out">
                 <h2>Nesting (inline)</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
                         val double: Int => Int = _ * 2	// (number => number * 2)
 
                         val inc: Int => Int = _ + 1	// (number => number + 1)
-                    </code>
-                </pre>
+                </code></pre>
 
                 <br>
 
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
                         val result = inc(double(5))	// 11
-                    </code>
-                </pre>
+                </code></pre>
 
                 <aside class="notes">
                     <ul>
@@ -421,16 +395,14 @@
             <section data-transition="convex-in concave-out">
                 <h2>Compose without applying</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
                         val doubleAndIncrement: Int => Int = number => {
 
                                 inc(double(number))
 
                         }
 
-                    </code>
-                </pre>
+                </code></pre>
 
                 <aside class="notes">
                     <ul>
@@ -467,27 +439,23 @@
             <section data-transition="convex-in concave-out">
                 <h2>The `compose` function</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
                         trait Function1[-T1, +R] {
 
                             def compose[A](g: (A) => T1): (A) => R
 
                         }
-                    </code>
-                </pre>
+                </code></pre>
 
                 <br>
                 <h5>in use</h5>
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
                         val doubleAndIncrement: Int => Int = inc.compose(double)
 
                         val doubleAndIncrement: Int => Int = inc compose double
 
                         val result = doubleAndIncrement(5) // 11
-                    </code>
-                </pre>
+                </code></pre>
 
                 <aside class="notes">
                     <ul>
@@ -504,17 +472,15 @@
             <section data-transition="convex-in concave-out">
                 <h2>Reading right to left</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim>
-                        val doThing: Int => Int = inc compose
+                <pre class="scala"><code data-trim>
+                    val doThing: Int => Int = inc compose
 
-                                        double compose
+										                                        double compose
 
-                                            inc compose
+										                                            inc compose
 
-                                                triple
-                    </code>
-                </pre>
+										                                                triple
+                </code></pre>
 
                 <aside class="notes">
                     <ul>
@@ -530,26 +496,22 @@
             <section data-transition="convex-in concave-out">
                 <h2>andThen</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
                         trait Function1[-T1, +R] {
 
                             def andThen[A](g: (R) => A): (T1) => A
 
                         }
-                    </code>
-                </pre>
+                </code></pre>
                 <br>
                 <h5>In use</h5>
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
                         val incrementAndDouble: Int => Int = inc.andThen(double)
 
                         val incrementAndDouble: Int => Int = inc andThen double
 
                         val result = incrementAndDouble(5) // 12
-                    </code>
-                </pre>
+                </code></pre>
 
                 <aside class="notes">
                     <ul>
@@ -565,17 +527,15 @@
             <section data-transition="convex-in concave-out">
                 <h2>Reading left to right</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim>
-                        val doThing: Int => Int = inc andThen
+                <pre class="scala"><code data-trim>
+                	val doThing: Int => Int = inc andThen
 
-                                        double andThen
+									                                        double andThen
 
-                                            inc andThen
+									                                            inc andThen
 
-                                                triple
-                    </code>
-                </pre>
+									                                                triple
+                </code></pre>
 
                 <aside class="notes">
                     <ul>
@@ -596,18 +556,15 @@
                 <br>
                 <br>
 
-                <pre class="scala fragment">
-                    <code data-trim>
+                <pre class="scala fragment"><code data-trim>
                         val a: Config => DbResult
                         val b: DbResult => BigInt
                         val c: BigInt => BigInt
                         val d: BigInt => Json
 
                         val e: Config => Json = a andThen b andThen c andThen d
-                    </code>
-                </pre>
-
-                <
+                </code></pre>
+                
                 <aside class="notes">
                     <ul>
                         <li>Seen this one already - explicit</li>
@@ -624,8 +581,7 @@
                 <h2>Can't compose, won't compose</h2>
                 <br>
 
-                <pre class="scala">
-                    <code data-trim data-noescape>
+                <pre class="scala"><code data-trim data-noescape>
                         val unitNum: Unit => Int = Unit => 5
 
                         val double: Int => Int = _ * 2
@@ -639,8 +595,7 @@
                         <span class="fragment" data-fragment-index="1"><mark><s>val other = laterNum andThen double</s></mark></span>
 
 
-                    </code>
-                </pre>
+                </code></pre>
 
                 <aside class="notes">
                     <ul>
@@ -710,15 +665,13 @@
             <section data-transition="convex-in concave-out">
                 <h2>The problem composing with a context</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
                         val getEmployeeFromDb: Id => IO[Employee]
 
                         val processEmployee: Employee => IO[Employee]
 
                         val updateEmployeeInDb: Employee => IO[Int]
-                    </code>
-                </pre>
+                </code></pre>
 
                 <aside class="notes">
                     <ul>
@@ -735,16 +688,14 @@
             <section data-transition="convex-in concave-out">
                 <h2>Solution 1 - flatMap</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
                         val comboFlatMap: Id => IO[Boolean] = id =>
                         getEmployeeFromDb(id) flatMap { employee =>
                             processEmployee(employee) flatMap { processed =>
                                 updateEmployeeInDb(processed)
                             }
                         }
-                    </code>
-                </pre>
+                </code></pre>
 
                 <aside class="notes">
                     <ul>
@@ -762,16 +713,14 @@
             <section data-transition="convex-in concave-out">
                 <h2>Solution 2 - For comprehension</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
                         val comboForComp: Unit => IO[Boolean] = id =>
                             for {
                                 employee <- getEmployeeFromDb(id)
                                 processed <- processEmployee(employee)
                                 result <- updateEmployeeInDb(processed)
                             } yield result
-                    </code>
-                </pre>
+                </code></pre>
 
                 <aside class="notes">
                     <ul>
@@ -787,12 +736,10 @@
             <section data-transition="convex-in concave-out">
                 <h2>Solution 3 - The Kleisli</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
                         val fn: Int => IO[String] = ???
                         val fnK: Kleisli[IO, Int, String] = ???
-                    </code>
-                </pre>
+                </code></pre>
 
                 <aside class="notes">
                     <ul>
@@ -806,15 +753,13 @@
             <section data-transition="convex-in concave-out">
                 <h2>Lifting into a Kleisli</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
                         val getEmployeeFromDb: Id => IO[Employee] = ???
 
                         val getEmployeeFromDbK = Kleisli.apply(getEmployeeFromDb)
 
                         val getEmployeeFromDbK = Kleisli(getEmployeeFromDb)
-                    </code>
-                </pre>
+                </code></pre>
 
                 <aside class="notes">
                     <ul>
@@ -828,8 +773,7 @@
             <section data-transition="convex-in concave-out">
                 <h2>Combining Kleisli</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
                         val getEmployeeFromDbK: Kleisli[IO, Id, Employee] = ???
                         val processEmployeeK: Kleisli[IO, Employee, Employee] = ???
                         val updateEmployeeInDbK: Klesili[IO, Employee, Int] = ???
@@ -838,8 +782,7 @@
                             getEmployeeFromDbK
                                 andThen processEmployeeK
                                     andThen updateEmployeeInDbK
-                    </code>
-                </pre>
+                </code></pre>
 
                 <aside class="notes">
                     <ul>
@@ -852,14 +795,12 @@
             <section data-transition="convex-in concave-out">
                 <h2>Combining and lifting Kleisli</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
                         val comboKleisli: Kleisli[IO, Id, Int] =
                             Kleisli(getEmployeeFromDb)
                                 andThenK processEmployee
                                     andThenK updateEmployeeInDb
-                    </code>
-                </pre>
+                </code></pre>
 
                 <aside class="notes">
                     <ul>
@@ -885,23 +826,19 @@
             </section>
 
             <section data-transition="convex-in concave-out">
-							<pre class="scala">
-                    <code data-trim>
+							<pre class="scala"><code data-trim>
                         val comboKleisli: Kleisli[IO, Id, Int] =
                             Kleisli(getEmployeeFromDb)
                                 >=> Kleisli(processEmployee)
                                     >=> Kleisli(updateEmployeeInDb)
-                    </code>
-                </pre>
+                </code></pre>
                 <br>
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
                         val comboKleisli: Kleisli[IO, Id, Int] =
                             Kleisli(getEmployeeFromDb)
                                 >==> processEmployee
                                     >==> updateEmployeeInDb
-                    </code>
-                </pre>
+                </code></pre>
 
                 <aside class="notes">
                     <ul>
@@ -918,14 +855,12 @@
             <section data-transition="convex-in concave-out">
                 <h2>Extracting from a Kleisli</h2>
                 <br>
-                <pre class="scala">
-                    <code data-trim>
+                <pre class="scala"><code data-trim>
 							comboFn: Id => IO[Int] = 
 								(Kleisli(getEmployeeFromDb)
 									andThenK processEmployeeK
 										andThenK updateEmployeeInDbK).run
-                    </code>
-                </pre>
+                </code></pre>
 
                 <aside class="notes">
                     <ul>
@@ -951,25 +886,21 @@
                 <div>
                     <h2>Readability</h2>
                     <h3>From</h3>
-                    <pre class="scala">
-                        <code data-trim>
+                    <pre class="scala"><code data-trim>
                             handler =
                             TimecodeUpdateHandler
                             .createHandler(TimecodesDao, notificationPublisher)
-                        </code>
-                </pre>
+                    </code></pre>
 
                     <h3>To</h3>
-                    <pre class="scala">
-                    <code data-trim>
+                    <pre class="scala"><code data-trim>
                         transcodedTimecodeHandler =
                         TranscodedTimecodeHandler.splitProgrammeParts andThen
                         TranscodedTimecodeHandler.calculateTimecodeData andThen
                         TimecodesDao.upsert(xa) andThen
                         TimecodeHandler.handleNotifications(notificationPublisher) andThen
                         TimecodeHandler.handleFailure
-                    </code>
-                </pre>
+                	</code></pre>
 
                 </div>
                 <aside class="notes">
@@ -987,16 +918,14 @@
             <section data-transition="convex-in concave-out">
                 <div>
                     <h2>Reusability</h2>
-                    <pre class="scala">
-                        <code data-trim data-noescape>
-                            transcodedTimecodeHandler =
-                            <mark>TranscodedTimecodeHandler</mark>.splitProgrammeParts andThen
-                            <mark>TranscodedTimecodeHandler</mark>.calculateTimecodeData andThen
-                            TimecodesDao.upsert(xa) andThen
-                            <mark>TimecodeHandler</mark>.handleNotifications(notificationPublisher) andThen
-                            <mark>TimecodeHandler</mark>.handleFailure
-                        </code>
-                </pre>
+                    <pre class="scala"><code data-trim data-noescape>
+                        transcodedTimecodeHandler =
+                        <mark>TranscodedTimecodeHandler</mark>.splitProgrammeParts andThen
+                        <mark>TranscodedTimecodeHandler</mark>.calculateTimecodeData andThen
+                        TimecodesDao.upsert(xa) andThen
+                        <mark>TimecodeHandler</mark>.handleNotifications(notificationPublisher) andThen
+                        <mark>TimecodeHandler</mark>.handleFailure
+                    </code></pre>
 
                 </div>
                 <aside class="notes">
@@ -1013,29 +942,25 @@
                 <div>
                     <h2>Robustness (Testing)</h2>
                     <h4>Stubbing</h4>
-                    <pre class="scala">
-                        <code data-trim>
+                    <pre class="scala"><code data-trim>
                             val getFilesForProduction: Production => IO[List[File]] =
                                 _ => IO.pure(files)
 
                             val statusPublisher: StatusMessage => IO[Unit] =
                                 _ => IO.raiseError(new Exception("oh noes!"))
 
-                        </code>
-                    </pre>
+                    </code></pre>
 
                     <br>
                     <h4>Mocking</h4>
-                    <pre class="scala">
-                    <code data-trim>
+                    <pre class="scala"><code data-trim>
 
                         val publishedMessage: Promise[TimecodeMessage] = Promise()
 
                         val timecodePublisher: TimecodeMessage => IO[Unit] =
                             message => IO(publishedMessage.success(message))
 
-                    </code>
-                </pre>
+                	</code></pre>
 
                 </div>
                 <aside class="notes">

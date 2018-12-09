@@ -231,6 +231,10 @@
                                 input.reverse
                             }
 
+                            <mark>lazy val</mark> backwards: String => String = input => {
+                                input.reverse
+                            }
+
                             println(backwards("fish"))
                         }
                 </code></pre>
@@ -241,26 +245,6 @@
                         <li>def create and return a fn and can be coerced to return an fn</li>
                         <li>distinction</li>
                         <li>eager evaluation vs every call</li>
-                    </ul>
-                </aside>
-            </section>
-
-
-            <section data-transition="convex-in concave-out">
-                <h2>A lazy function value</h2>
-                <br>
-                <pre class="scala"><code data-trim data-noescape>
-                        object Main extends App {
-
-                            <mark>lazy val</mark> backwards: String => String = input => {
-                                input.reverse
-                            }
-
-                            println(backwards("fish"))
-                        }
-                </code></pre>
-                <aside class="notes">
-                    <ul>
                         <li>evaluation on first call</li>
                         <li>not called, never evaluate</li>
                         <li>recap: def, val, lazy val</li>
@@ -889,7 +873,7 @@
                     <pre class="scala"><code data-trim>
                             handler =
                             TimecodeUpdateHandler
-                            .createHandler(TimecodesDao, notificationPublisher)
+                            .createHandler(TimecodesDao, publisher)
                     </code></pre>
 
                     <h3>To</h3>
@@ -898,7 +882,7 @@
                         TranscodedTimecodeHandler.splitProgrammeParts andThen
                         TranscodedTimecodeHandler.calculateTimecodeData andThen
                         TimecodesDao.upsert(xa) andThen
-                        TimecodeHandler.handleNotifications(notificationPublisher) andThen
+                        TimecodeHandler.handleNotifications(publisher) andThen
                         TimecodeHandler.handleFailure
                 	</code></pre>
 
@@ -923,7 +907,7 @@
                         <mark>TranscodedTimecodeHandler</mark>.splitProgrammeParts andThen
                         <mark>TranscodedTimecodeHandler</mark>.calculateTimecodeData andThen
                         TimecodesDao.upsert(xa) andThen
-                        <mark>TimecodeHandler</mark>.handleNotifications(notificationPublisher) andThen
+                        <mark>TimecodeHandler</mark>.handleNotifications(publisher) andThen
                         <mark>TimecodeHandler</mark>.handleFailure
                     </code></pre>
 
